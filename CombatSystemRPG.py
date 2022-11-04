@@ -28,6 +28,10 @@ def turnOrder(characters):
         order += (rollInitiative(character), )
     return(order)
 
+#def magicspells():
+#    spells = ['rushdown', 'exorcism', 'mend']
+#    if input ('rushdown')
+
 
 #ola sou o henrique
 player = createCharacter("PLAYER", 25, 10, 2, 5, 10)   
@@ -35,3 +39,12 @@ monster = createCharacter("MONSTER", 30, 20, 23, 5, 6)
 characters = allCharacters((player, monster))
 print(str(characters[0]) + "\n" + str(characters[1]))
 print(str(turnOrder(characters)))
+
+spells = ['rushdown', 'exorcism', 'mend']
+#se escolher o spell e possior mp sufecientes
+#spellefectvalue = -1 * (wd + d4)
+#if input('rushdown') and (mpplayer >= SpellMPcost):
+#   (player[2]) - 
+
+
+
