@@ -1,5 +1,7 @@
 import random
 
+
+
 #Function to create a character
 def createCharacter(name, health, mana, armor, damage, iniative):
 
@@ -21,15 +23,38 @@ def rollInitiative(character):
 #Function that creates a tuple with the order of each character
 def turnOrder(characters):
 
-    order = tuple()
+    order = []
 
     for character in characters:
 
-        order += (rollInitiative(character), )
+        order.append(rollInitiative(character))
+    
     return(order)
+
+
+def sortOrder(order):
+
+    aux = 0
+
+    for i in range(len(order)):
+        for index in range(len(order)):
+            if (index < len(order) - 2):
+                if (order[index] > order[index + 1]):
+                    aux = order[index]
+                    order[index] = order[index + 1]
+                    order[index + 1] = aux
+        print(str(i))
+    return(order)
+
+#def sortOrder(characters, order):
+
+    
+
 
 player = createCharacter("PLAYER", 25, 10, 2, 5, 10)   
 monster = createCharacter("MONSTER", 30, 20, 23, 5, 6)   
 characters = allCharacters((player, monster))
 print(str(characters[0]) + "\n" + str(characters[1]))
 print(str(turnOrder(characters)))
+print("----------------------------------------")
+print(str(sortOrder([5, 2, 9, 31, 23, 4, 69, 12])))
