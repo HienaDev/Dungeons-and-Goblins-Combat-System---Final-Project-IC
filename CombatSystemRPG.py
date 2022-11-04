@@ -28,6 +28,8 @@ def turnOrder(characters):
         order += (rollInitiative(character), )
     return(order)
 
+
+#ola sou o henrique
 player = createCharacter("PLAYER", 25, 10, 2, 5, 10)   
 monster = createCharacter("MONSTER", 30, 20, 23, 5, 6)   
 characters = allCharacters((player, monster))
