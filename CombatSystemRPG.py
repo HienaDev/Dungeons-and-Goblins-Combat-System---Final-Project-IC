@@ -11,7 +11,7 @@ def createCharacter(name, health, mana, armor, damage, iniative):
         "mana" : mana,
         "armor" : armor,
         "damage" : damage,
-        "iniative" : iniative
+        "initiative" : iniative
     }
 
     return (character)
@@ -73,10 +73,40 @@ def sortOrder(order, characters):
 
 #What rushdown spell does
 def rushdown(characters):
+    
     d4=random.randrange(1,4)
     spellmpcost = 5
-    if (warrior["mana"] >= spellmpcost):
-        pass
+    if (warrior["mana"] < spellmpcost):
+        print("U dont have enough mana to cast the spell!")
+    else:
+        attackDecision = input("Who do you want to attack? \n 1-Spider \n 2-Ogre \n 3-Monster \n 4-Back \n" ).translate({ord(c): None for c in string.whitespace})
+        attackDecision = attackDecision.lower()
+        if (attackDecision == "1"): 
+            SpellEffectValue = -1 * (warrior("damage") + d4)
+            spider["health"] = spider["health"] + SpellEffectValue
+            print("The Warrior used the Rushdown spell on the Spider. Spider has " + str(spider["hp"]) + " left!")
+            
+        elif (attackDecision == "2"): 
+            SpellEffectValue = -1 * (warrior("damage") + d4)
+            Ogre["health"] = Ogre["health"] + SpellEffectValue
+            print("The Warrior used the Rushdown spell on the Ogre. Ogre has " + str(Ogre["hp"]) + " left!")
+            
+        elif (attackDecision == "3"): 
+            SpellEffectValue = -1 * (warrior("damage") + d4)
+            monster["health"] = monster["health"] + SpellEffectValue
+            print("The Warrior used the Rushdown spell on the Monster. Spider has " + str(monster["hp"]) + " left!")
+            
+        else:
+            print("Sorry I cant do that!")
+           
+        
+      
+    
+    
+    
+    
+    
+        
         
 #What exorcism spell does
 def exorcism():
@@ -170,9 +200,10 @@ def chooseAction(character):
 
         else:
 
-            continue
+            pass
 
 
+def
 #Function for every action in the action phase
 def actionPhase(characters):
 
@@ -184,7 +215,8 @@ player = createCharacter("Player", 25, 10, 2, 5, 10)
 monster = createCharacter("Monster", 30, 20, 23, 5, 6)   
 priest = createCharacter("Priest", 20, 25, 0, 2, 6)  
 warrior = createCharacter("Warrior", 32, 5, 2, 5, 2)  
-spider = createCharacter("Spider", 17, 5, 23, 5, 9) 
+spider = createCharacter("Spider", 17, 5, 23, 5, 9)
+Ogre = createCharacter("Ogre", 63, 5, 33, 10, 2 )
 
 characters = allCharacters([player, monster, priest, warrior, spider])
 for x in characters:
@@ -197,7 +229,3 @@ print("----------------------------------------")
 whoGoesFirst(characters)
 actionPhase(characters)
 
-#se escolher o spell e possior mp sufecientes
-#spellefectvalue = -1 * (wd + d4)
-#if input('rushdown') and (mpplayer >= SpellMPcost):
-#   (player[2]) - 
