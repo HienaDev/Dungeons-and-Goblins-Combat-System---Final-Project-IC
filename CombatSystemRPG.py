@@ -3,7 +3,7 @@ import string
 
 
 #Function to create a character
-def createCharacter(name, health, mana, armor, damage, iniative):
+def createCharacter(name, health, mana, armor, damage, initiative):
 
     character = {
         "name" : name,
@@ -11,7 +11,7 @@ def createCharacter(name, health, mana, armor, damage, iniative):
         "mana" : mana,
         "armor" : armor,
         "damage" : damage,
-        "initiative" : iniative
+        "initiative" : initiative
     }
 
     return (character)
@@ -27,8 +27,8 @@ def allCharacters(characters):
 def rollInitiative(character):
 
     d20 = random.randrange(1, 20)
-    print(character["name"] + " rolled a " + str(d20) + " his turn order is: " + str(d20 + character["iniative"]))
-    return (d20 + character["iniative"])
+    print(character["name"] + " rolled a " + str(d20) + " his turn order is: " + str(d20 + character["initiative"]))
+    return (d20 + character["initiative"])
 
 
 #Function that creates a tuple with the iniative roll of each character
@@ -71,41 +71,44 @@ def sortOrder(order, characters):
     return(order, characters)
     
 
+def targetChoice(friendship):
+
+    if (friendship == 0):
+        while(True):
+            attackDecision = input("Who do you want to attack? \n 1 - Spider \n 2 - Ogre \n 3 - Monster\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+            if (attackDecision == "1"):
+                return (spider)
+            elif (attackDecision == "2"):
+                return (ogre)
+            elif (attackDecision == "3"):
+                return (monster)
+            else:
+                print("You need to choose an enemy to attack\n")
+                continue
+    elif(friendship == 1):
+        attackDecision = input("Who do you want to target? \n 1 - Warrior \n 2 - Priest\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+
+    return (attackDecision)
+
+
 #What rushdown spell does
-def rushdown(characters):
+def rushdown():
     
     d4=random.randrange(1,4)
     spellmpcost = 5
+
     if (warrior["mana"] < spellmpcost):
-        print("U dont have enough mana to cast the spell!")
+
+        print("You dont have enough mana to cast the spell!")
+
     else:
-        attackDecision = input("Who do you want to attack? \n 1-Spider \n 2-Ogre \n 3-Monster \n 4-Back \n" ).translate({ord(c): None for c in string.whitespace})
-        attackDecision = attackDecision.lower()
-        if (attackDecision == "1"): 
-            SpellEffectValue = -1 * (warrior("damage") + d4)
-            spider["health"] = spider["health"] + SpellEffectValue
-            print("The Warrior used the Rushdown spell on the Spider. Spider has " + str(spider["hp"]) + " left!")
-            
-        elif (attackDecision == "2"): 
-            SpellEffectValue = -1 * (warrior("damage") + d4)
-            Ogre["health"] = Ogre["health"] + SpellEffectValue
-            print("The Warrior used the Rushdown spell on the Ogre. Ogre has " + str(Ogre["hp"]) + " left!")
-            
-        elif (attackDecision == "3"): 
-            SpellEffectValue = -1 * (warrior("damage") + d4)
-            monster["health"] = monster["health"] + SpellEffectValue
-            print("The Warrior used the Rushdown spell on the Monster. Spider has " + str(monster["hp"]) + " left!")
-            
-        else:
-            print("Sorry I cant do that!")
-           
+        enemy = targetChoice(0)
+        print( enemy["name"] + " health before attack: " + str(enemy["health"]))
+        enemy["health"] = enemy["health"] - (warrior["damage"] + d4)
+        print("\nWarrior dealt " +str((warrior["damage"] + d4)) + " damage to the " + enemy["name"] + "\n")
+        print( enemy["name"] + " health after attack: " + str(enemy["health"]))
         
-      
-    
-    
-    
-    
-    
+           
         
         
 #What exorcism spell does
@@ -117,24 +120,29 @@ def mend():
     
 
 #Warrior choosing a spell
-def spellchooseW(characters):
-    print(" What spell will you choose: \n 1-RushDown \n 0-Back ")
-    if input(1):
-        rushdown()
-    elif input(0):
-        pass
+def spellchooseW(character):
+
+    while(True):
+        print("--------------------------")
+        choice = input("What spell will you choose: \n 1 - RushDown\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+        if (choice == "1"):
+            rushdown()
+            break
+        else:
+            print("You need to choose a spell\n")
+            continue
 
 
 #Priest choosing a spell
 def spellChooseP(character):
 
     print("--------------------------")
-    print("What spell will you choose: \n1 - Exorcism \n2 - Mend \n0 - Back ")
-    if (input == "1"):
+    choice = input("What spell will you choose: \n 1 - Exorcism \n 2 - Mend \n 0 - Back \n\n").translate({ord(c): None for c in string.whitespace}).lower()
+    if (choice == "1"):
         exorcism()
-    elif input("2"):
+    elif (choice == "2"):
         mend()
-    elif input(0):
+    elif (choice == "0"):
         pass
 
 
@@ -184,9 +192,9 @@ def chooseAction(character):
 
     while(True):
 
-        print("----------------------------------")
+        print("--------------------------")
         print("You are: " + character["name"])
-        choice = input("Would you like to: \n1 - Attack \n2 - Use a spell?\n").translate({ord(c): None for c in string.whitespace})
+        choice = input("Would you like to: \n 1 - Attack \n 2 - Use a spell?\n\n").translate({ord(c): None for c in string.whitespace}).lower()
 
         if (choice == "1"):
 
@@ -203,7 +211,6 @@ def chooseAction(character):
             pass
 
 
-def
 #Function for every action in the action phase
 def actionPhase(characters):
 
@@ -216,7 +223,7 @@ monster = createCharacter("Monster", 30, 20, 23, 5, 6)
 priest = createCharacter("Priest", 20, 25, 0, 2, 6)  
 warrior = createCharacter("Warrior", 32, 5, 2, 5, 2)  
 spider = createCharacter("Spider", 17, 5, 23, 5, 9)
-Ogre = createCharacter("Ogre", 63, 5, 33, 10, 2 )
+ogre = createCharacter("Ogre", 63, 5, 33, 10, 2 )
 
 characters = allCharacters([player, monster, priest, warrior, spider])
 for x in characters:
