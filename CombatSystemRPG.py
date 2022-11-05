@@ -1,4 +1,5 @@
 import random
+import string
 
 
 #Function to create a character
@@ -70,14 +71,14 @@ def sortOrder(order, characters):
     return(order, characters)
     
 
-#What exorcism spell does
+#What rushdown spell does
 def rushdown(characters):
     d4=random.randrange(1,4)
     spellmpcost = 5
     if (warrior["mana"] >= spellmpcost):
         pass
         
-
+#What exorcism spell does
 def exorcism():
     pass
 
@@ -85,7 +86,7 @@ def mend():
     pass
     
 
-#Warrior choosing the spell
+#Warrior choosing a spell
 def spellchooseW(characters):
     print(" What spell will you choose: \n 1-RushDown \n 0-Back ")
     if input(1):
@@ -94,12 +95,14 @@ def spellchooseW(characters):
         pass
 
 
-#Wizzard choosing the spells
-def spellchooseP(characters):
-    print(" What spell will you choose: \n 1-Exorcism \n 2-Mend \n 0-Back ")
-    if input(1):
+#Priest choosing a spell
+def spellChooseP(character):
+
+    print("--------------------------")
+    print("What spell will you choose: \n1 - Exorcism \n2 - Mend \n0 - Back ")
+    if (input == "1"):
         exorcism()
-    elif input(2):
+    elif input("2"):
         mend()
     elif input(0):
         pass
@@ -111,6 +114,8 @@ def spellchooseP(characters):
 #    spells = ['rushdown', 'exorcism', 'mend']
 #    if input ('rushdown')
 
+
+#Function that shows character's attack order
 def whoGoesFirst(characters):
     
     print("Turn order:\n")
@@ -122,11 +127,64 @@ def whoGoesFirst(characters):
 
 
 
-player = createCharacter("PLAYER", 25, 10, 2, 5, 10)   
-monster = createCharacter("MONSTER", 30, 20, 23, 5, 6)   
-priest = createCharacter("PRIEST", 20, 25, 0, 2, 6)  
-warrior = createCharacter("WARRIOR", 32, 5, 2, 5, 2)  
-spider = createCharacter("SPIDER", 17, 5, 23, 5, 9) 
+#Function to know who is using each spell
+def spellPhase(character):
+
+    if (character["name"] == "Priest"):
+
+        spellChooseP(character)
+
+    elif (character["name"] == "Warrior"):
+
+        spellchooseW(character)
+    
+    else:
+        
+        print(character["name"] + " uses a spell!")
+
+
+#Function to attack
+def attackPhase(character):
+
+    print("\n" + character["name"] + " attacks\n")
+
+
+#Function to decide what action each character does
+def chooseAction(character):
+
+    while(True):
+
+        print("----------------------------------")
+        print("You are: " + character["name"])
+        choice = input("Would you like to: \n1 - Attack \n2 - Use a spell?\n").translate({ord(c): None for c in string.whitespace})
+
+        if (choice == "1"):
+
+            attackPhase(character)
+            break
+
+        elif (choice == "2"):
+
+            spellPhase(character)
+            break
+
+        else:
+
+            continue
+
+
+#Function for every action in the action phase
+def actionPhase(characters):
+
+    for character in characters:
+
+        chooseAction(character)
+
+player = createCharacter("Player", 25, 10, 2, 5, 10)   
+monster = createCharacter("Monster", 30, 20, 23, 5, 6)   
+priest = createCharacter("Priest", 20, 25, 0, 2, 6)  
+warrior = createCharacter("Warrior", 32, 5, 2, 5, 2)  
+spider = createCharacter("Spider", 17, 5, 23, 5, 9) 
 
 characters = allCharacters([player, monster, priest, warrior, spider])
 for x in characters:
@@ -137,6 +195,7 @@ order, characters = sortOrder(order, characters)
 print(str(order))
 print("----------------------------------------")
 whoGoesFirst(characters)
+actionPhase(characters)
 
 #se escolher o spell e possior mp sufecientes
 #spellefectvalue = -1 * (wd + d4)
