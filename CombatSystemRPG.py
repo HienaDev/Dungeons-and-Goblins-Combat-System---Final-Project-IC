@@ -46,6 +46,41 @@ def sortOrder(order):
         print(str(i))
     return(order)
 
+
+#What exorcism spell does
+def rushdown(characters):
+    d4=random.randrange(1,4)
+    spellmpcost = 5
+    if (warrior[2] >= spellmpcost):
+        SpellEffectValue = -1 * (WP + d4)
+        
+
+def exorcism():
+    pass
+
+def mend():
+    pass
+    
+
+#Warrior choosing the spell
+def spellchooseW(characters):
+    print(" What spell will you choose: \n 1-RushDown \n 0-Back ")
+    if input(1):
+        rushdown()
+    elif input(0):
+        pass
+
+
+#Wizzard choosing the spells
+def spellchooseP(characters):
+    print(" What spell will you choose: \n 1-Exorcism \n 2-Mend \n 0-Back ")
+    if input(1):
+        exorcism()
+    elif input(2):
+        mend()
+    elif input(0):
+        pass
+
 #def sortOrder(characters, order):
 
     
@@ -62,15 +97,21 @@ def sortOrder(order):
 
 #ola sou o henrique
 
+
 player = createCharacter("PLAYER", 25, 10, 2, 5, 10)   
 monster = createCharacter("MONSTER", 30, 20, 23, 5, 6)   
-characters = allCharacters((player, monster))
+priest = createCharacter("Priest", 20, 25, 0, 2, 6)
+warrior = createCharacter("Warrior", 32, 5, 2, 5, 2)
+
+
+characters = allCharacters((player, monster, priest, warrior))
+
+
 print(str(characters[0]) + "\n" + str(characters[1]))
 print(str(turnOrder(characters)))
 print("----------------------------------------")
 print(str(sortOrder([5, 2, 9, 31, 23, 4, 69, 12])))
 
-spells = ['rushdown', 'exorcism', 'mend']
 #se escolher o spell e possior mp sufecientes
 #spellefectvalue = -1 * (wd + d4)
 #if input('rushdown') and (mpplayer >= SpellMPcost):
