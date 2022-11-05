@@ -4,7 +4,15 @@ import random
 #Function to create a character
 def createCharacter(name, health, mana, armor, damage, iniative):
 
-    character = (name, health, mana, armor, damage, iniative)
+    character = {
+        "name" : name,
+        "health" : health,
+        "mana" : mana,
+        "armor" : armor,
+        "damage" : damage,
+        "iniative" : iniative
+    }
+
     return (character)
 
 
@@ -18,8 +26,8 @@ def allCharacters(characters):
 def rollInitiative(character):
 
     d20 = random.randrange(1, 20)
-    print(character[0] + " rolled a " + str(d20) + " his turn order is: " + str(d20 + character[5]))
-    return (d20 + character[5])
+    print(character["name"] + " rolled a " + str(d20) + " his turn order is: " + str(d20 + character["iniative"]))
+    return (d20 + character["iniative"])
 
 
 #Function that creates a tuple with the iniative roll of each character
@@ -38,7 +46,7 @@ def turnOrder(characters):
 def sortOrder(order, characters):
 
     auxTurn = 0
-    auxCharacter = "Hello"
+    auxCharacter = ""
 
     for i in range(len(order)):
 
@@ -57,6 +65,8 @@ def sortOrder(order, characters):
                     auxCharacter = characters[x]
                     characters[x] = characters[x + 1]
                     characters[x + 1] = auxCharacter
+
+                    
     return(order, characters)
     
 
@@ -64,8 +74,8 @@ def sortOrder(order, characters):
 def rushdown(characters):
     d4=random.randrange(1,4)
     spellmpcost = 5
-    if (warrior[2] >= spellmpcost):
-        SpellEffectValue = -1 * (WP + d4)
+    if (warrior["mana"] >= spellmpcost):
+        pass
         
 
 def exorcism():
@@ -108,7 +118,7 @@ def whoGoesFirst(characters):
     
     for x in characters:
         i += 1
-        print(str(i) + " - " + x[0])
+        print(str(i) + " - " + x["name"])
 
 
 
@@ -116,7 +126,8 @@ player = createCharacter("PLAYER", 25, 10, 2, 5, 10)
 monster = createCharacter("MONSTER", 30, 20, 23, 5, 6)   
 priest = createCharacter("PRIEST", 20, 25, 0, 2, 6)  
 warrior = createCharacter("WARRIOR", 32, 5, 2, 5, 2)  
-spider = createCharacter("SPIDER", 17, 5, 23, 5, 9)  
+spider = createCharacter("SPIDER", 17, 5, 23, 5, 9) 
+
 characters = allCharacters([player, monster, priest, warrior, spider])
 for x in characters:
     print(str(x))
