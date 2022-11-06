@@ -87,6 +87,13 @@ def targetChoice(friendship):
                 continue
     elif(friendship == 1):
         attackDecision = input("Who do you want to target? \n 1 - Warrior \n 2 - Priest\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+        if (attackDecision == "1"):
+                return (priest)
+        elif (attackDecision == "2"):
+                return (warrior)
+        else:
+            print("You need to choose an enemy to attack\n")
+            
 
     return (attackDecision)
 
@@ -105,17 +112,44 @@ def rushdown():
         enemy = targetChoice(0)
         print( enemy["name"] + " health before attack: " + str(enemy["health"]))
         enemy["health"] = enemy["health"] - (warrior["damage"] + d4)
-        print("\nWarrior dealt " +str((warrior["damage"] + d4)) + " damage to the " + enemy["name"] + "\n")
+        print("\nWarrior dealt " + str((warrior["damage"] + d4)) + " damage to the " + enemy["name"] + "\n")
         print( enemy["name"] + " health after attack: " + str(enemy["health"]))
         
            
         
-        
+          
 #What exorcism spell does
 def exorcism():
+
+    d4=random.randrange(1,4)
+    spellmpcost = 5
+
+    if (warrior["mana"] < spellmpcost):
+
+        print("You dont have enough mana to cast the spell!")
+
+    else:
+        enemy = targetChoice(0)
+        print( enemy["name"] + " health before attack: " + str(enemy["health"]))
+        enemy["health"] = enemy["health"] - (d4 * 2)
+        print("\nWarrior dealt " + str(2 * d4) + " damage to the " + enemy["name"] + "\n")
+        print( enemy["name"] + " health after attack: " + str(enemy["health"]))
+        
     pass
 
 def mend():
+    d6=random.randrange(1,6)
+    spellmpcost = 3
+
+    if (warrior["mana"] < spellmpcost):
+
+        print("You dont have enough mana to cast the spell!")
+
+    else:
+        enemy = targetChoice(1)
+        enemy["health"] = enemy["health"] + (d6 + priest["damage"])
+        print("\nPriest healed " + str((warrior["damage"] + d6)) + " life points to the Warrior!\n")
+        print( enemy["name"] + " health after attack: " + str(enemy["health"]))
     pass
     
 
