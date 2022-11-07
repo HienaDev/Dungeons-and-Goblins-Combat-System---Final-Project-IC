@@ -1,9 +1,10 @@
 import random
 import string
+from termcolor import colored, cprint  #run on console: pip install termcolor
 
 
 #Function to create a character
-def createCharacter(name, health, mana, armor, damage, initiative):
+def createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned):
 
     character = {
         "name" : name,
@@ -11,7 +12,9 @@ def createCharacter(name, health, mana, armor, damage, initiative):
         "mana" : mana,
         "armor" : armor,
         "damage" : damage,
-        "initiative" : initiative
+        "initiative" : initiative,
+        "loyalty" : loyalty,
+        "poisoned" : poisoned
     }
 
     return (character)
@@ -77,11 +80,11 @@ def targetChoice(friendship):
         while(True):
             attackDecision = input("Who do you want to attack? \n 1 - Spider \n 2 - Ogre \n 3 - Monster\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
             if (attackDecision == "1"):
-                return (spider)
+                return goblin
             elif (attackDecision == "2"):
                 return (ogre)
             elif (attackDecision == "3"):
-                return (monster)
+                return goblinShaman
             else:
                 print("You need to choose an enemy to attack\n")
                 continue
@@ -112,7 +115,9 @@ def rushdown():
         enemy = targetChoice(0)
         print( enemy["name"] + " health before attack: " + str(enemy["health"]))
         enemy["health"] = enemy["health"] - (warrior["damage"] + d4)
-        print("\nWarrior dealt " + str((warrior["damage"] + d4)) + " damage to the " + enemy["name"] + "\n")
+        print("\nWarrior dealt ", end="")
+        print(colored(str((warrior["damage"] + d4)), "red"), end ="")
+        print(" damage to the " + enemy["name"] + "\n")
         print( enemy["name"] + " health after attack: " + str(enemy["health"]))
         
            
@@ -159,7 +164,7 @@ def spellchooseW(character):
     while(True):
         print("--------------------------")
         choice = input("What spell will you choose: \n 1 - RushDown\n\n").translate({ord(c): None for c in string.whitespace}).lower()
-        if (choice == "1"):
+        if (choice == "1" or choice == "rushdown"):
             rushdown()
             break
         else:
@@ -170,14 +175,18 @@ def spellchooseW(character):
 #Priest choosing a spell
 def spellChooseP(character):
 
-    print("--------------------------")
-    choice = input("What spell will you choose: \n 1 - Exorcism \n 2 - Mend \n 0 - Back \n\n").translate({ord(c): None for c in string.whitespace}).lower()
-    if (choice == "1"):
-        exorcism()
-    elif (choice == "2"):
-        mend()
-    elif (choice == "0"):
-        pass
+    while(True):
+        print(colored("--------------------------", ))
+        choice = input("What spell will you choose: \n 1 - Exorcism \n 2 - Mend\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+        if (choice == "1" or choice == "exorcism"):
+            exorcism()
+            break
+        elif (choice == "2" or choice == "mend"):
+            mend()
+            break
+        else:
+            print("\nYou have to choose a spell\n")
+            pass
 
 
 
@@ -224,6 +233,13 @@ def attackPhase(character):
 #Function to decide what action each character does
 def chooseAction(character):
 
+    if (character["poisoned"] > 0):
+        character["poisoned"] = character["poisoned"] - 1
+        print(character["name"] + " is poisoned he takes " + colored(poisonDamage, "green", attrs=["bold"]) + " damage!")
+        character["health"] = character["health"] - poisonDamage
+        print("Health is now " + str(character["health"]) + colored("\nPoisoned", "green", attrs=["bold"]) + " turns left: " + str(character["poisoned"]))
+    	
+
     while(True):
 
         print("--------------------------")
@@ -252,14 +268,16 @@ def actionPhase(characters):
 
         chooseAction(character)
 
-player = createCharacter("Player", 25, 10, 2, 5, 10)   
-monster = createCharacter("Monster", 30, 20, 23, 5, 6)   
-priest = createCharacter("Priest", 20, 25, 0, 2, 6)  
-warrior = createCharacter("Warrior", 32, 5, 2, 5, 2)  
-spider = createCharacter("Spider", 17, 5, 23, 5, 9)
-ogre = createCharacter("Ogre", 63, 5, 33, 10, 2 )
 
-characters = allCharacters([player, monster, priest, warrior, spider])
+poisonDamage = 5
+rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 25, 10, 2, 5, 10, "good", 3)   
+goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 30, 20, 23, 5, 6, "evil", 2)   
+priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 5)  
+warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 2)  
+goblin = createCharacter(colored("Goblin", "red", attrs=["bold"]), 17, 5, 23, 5, 9, "evil", 1)
+ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 63, 5, 33, 10, 2, "evil", 0)
+
+characters = allCharacters([rogue, goblinShaman, priest, warrior, goblin, ogre])
 for x in characters:
     print(str(x))
 order = turnOrder(characters)
