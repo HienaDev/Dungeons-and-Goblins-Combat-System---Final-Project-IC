@@ -1,7 +1,7 @@
 import random
 import string
 from termcolor import colored, cprint  #run on console: pip install termcolor
-
+import time
 
 #Function to create a character
 def createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned, alive):
@@ -79,7 +79,7 @@ def targetChoice(friendship):
 
     if (friendship == 0):
         while(True):
-            attackDecision = input("Who do you want to attack? \n 1 - " + goblin["name"] + "\n 2 - " + ogre["name"] + "\n 3 - " + goblinShaman["name"] + "\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+            attackDecision = input("Who do you want to target? \n 1 - " + goblin["name"] + "\n 2 - " + ogre["name"] + "\n 3 - " + goblinShaman["name"] + "\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
             if (attackDecision == "1"):
                 return (goblin)
             elif (attackDecision == "2"):
@@ -87,7 +87,7 @@ def targetChoice(friendship):
             elif (attackDecision == "3"):
                 return (goblinShaman)
             else:
-                print("You need to choose an enemy to attack\n")
+                print("You need to choose an " + colored("Enemy", "red", attrs=["bold"]) + " to attack\n")
                 continue
     elif(friendship == 1):
         attackDecision = input("Who do you want to target? \n 1 -" + warrior["name"] + "\n 2 -" + priest["name"] + "\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
@@ -266,29 +266,75 @@ def attackPhase(character):
 
     print("\n" + character["name"] + " attacks\n")
 
+    if (character["loyalty"] == "good"):
+
+        target = targetChoice(0)
+
+        if ((character["damage"] - target["armor"]) > 0):
+            target["health"] = target["health"] - (character["damage"] - target["armor"])
+            print( target["name"] + " took " + colored(str(character["damage"] - target["armor"]), "red", attrs = ["bold"]) + " damage!")
+            print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
+        else:
+            print (target["name"] + " took no damage!")
+        
+
+    elif (character["loyalty"] == "evil"):
+
+        print(character["name"] + " is deciding what to do...")
+        time.sleep(5)
+
+        target = random.randrange(1, 3)
+
+        if (target == 1):
+            target = priest
+        elif (target == 2):
+            target = warrior    
+        elif (target == 3):
+            target = rogue
+        
+        if ((character["damage"] - target["armor"]) > 0):
+            target["health"] = target["health"] - (character["damage"] - target["armor"])
+            print( target["name"] + " took " + colored(str(character["damage"] - target["armor"]), "red", attrs = ["bold"]) + " damage!")
+            print(target["name"] + " now has " + colored(str(target["health"]), "red", attrs = ["bold"]) + " health!")
+        else:
+            print (target["name"] + " took no damage!")
+        
+
+    else: 
+
+        print ("error on attack phase")
+
+
 
 #Function to decide what action each character does
 def chooseAction(character):
 
     if (character["alive"] == 1):
+
         if (character["poisoned"] > 0 and character["health"] > 0):
 
             character["poisoned"] = character["poisoned"] - 1
-            print(character["name"] + " is poisoned he takes " + colored(poisonDamage, "green", attrs=["bold"]) + " damage!")
+            print("\n" + character["name"] + " is poisoned he takes " + colored(poisonDamage, "green", attrs=["bold"]) + " damage!")
             character["health"] = character["health"] - poisonDamage
-            print("Health is now " + str(character["health"]) + colored("\nPoisoned", "green", attrs=["bold"]) + " turns left: " + str(character["poisoned"]))
+            print("Health is now " + str(character["health"]) + colored("\nPoisoned", "green", attrs=["bold"]) + " turns left: " + str(character["poisoned"]) + "\n")
         
         if (character["health"] <= 0 and character["alive"] == 1):
             print(colored("--------------------------", "red",  attrs=["bold"]))
-            print(character["name"] + " is downed!")
+            print(" " + character["name"] + " is downed!")
             print(colored("--------------------------", "red",  attrs=["bold"]))
             character["alive"] = 0
             character["health"] = 0
         while(True and character["alive"] == 1):
+            
+            if (character["loyalty"] == "good"):
 
-            print("--------------------------")
-            print("You are: " + character["name"])
-            choice = input("Would you like to: \n 1 - Attack \n 2 - Use a spell?\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+                print("--------------------------")
+                print("You are: " + character["name"])
+                choice = input("Would you like to: \n 1 - Attack \n 2 - Use a spell?\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+
+            else:
+
+                choice = "1"
 
             if (choice == "1"):
 
@@ -303,6 +349,8 @@ def chooseAction(character):
             else:
 
                 pass
+    
+
 
 
 #Function for every action in the action phase
@@ -316,43 +364,52 @@ def actionPhase(characters):
 def whoWon():
 
     if (warrior["health"] + priest["health"] + rogue["health"]  <= 0):
-        pass
+        
+        print(colored (" __     __ ____   _    _    _       ____    _____  _______ ", "red"))
+        print(colored (" \ \   / // __ \ | |  | |  | |     / __ \  / ____||__   __|", "red"))
+        print(colored ("  \ \_/ /| |  | || |  | |  | |    | |  | || (___     | |   ", "red"))
+        print(colored ("   \   / | |  | || |  | |  | |    | |  | | \___ \    | |   ", "red"))
+        print(colored ("    | |  | |__| || |__| |  | |____| |__| | ____) |   | |   ", "red"))
+        print(colored ("    |_|   \____/  \____/   |______|\____/ |_____/    |_|   ", "red"))
+        print("\n")
+                                                                
+                                                           
+
         
                                                       
                                                       
 
     elif (ogre["health"] + goblin["health"] + goblinShaman["health"] <= 0 ):
-        print("__     __ ____   _    _  __          __ _____  _   _ ")
-        print("\ \   / // __ \ | |  | | \ \        / /|_   _|| \ | |")
-        print(" \ \_/ /| |  | || |  | |  \ \  /\  / /   | |  |  \| |")
-        print("  \   / | |  | || |  | |   \ \/  \/ /    | |  | . ` |")
-        print("   | |  | |__| || |__| |    \  /\  /    _| |_ | |\  |")
-        print("   |_|   \____/  \____/      \/  \/    |_____||_| \_|")
+
+        print(colored ("__     __ ____   _    _  __          __ _____  _   _ ", "yellow"))
+        print(colored ("\ \   / // __ \ | |  | | \ \        / /|_   _|| \ | |", "yellow"))
+        print(colored (" \ \_/ /| |  | || |  | |  \ \  /\  / /   | |  |  \| |", "yellow"))
+        print(colored ("  \   / | |  | || |  | |   \ \/  \/ /    | |  | . ` |", "yellow"))
+        print(colored ("   | |  | |__| || |__| |    \  /\  /    _| |_ | |\  |", "yellow"))
+        print(colored ("   |_|   \____/  \____/      \/  \/    |_____||_| \_|", "yellow"))
+        print("\n")
 
     else:
-        print("wtf")
+        print("It's a tie?")
 
 
 poisonDamage = 5
-rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 25, 10, 2, 5, 10, "good", 3, 1)   
-goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 4, 20, 23, 5, 6, "evil", 2, 1)   
+rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 30, 10, 2, 5, 10, "good", 3, 1)   
+goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 20, 23, 5, 6, "evil", 2, 1)   
 priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 5, 1)  
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 2, 1)  
-goblin = createCharacter(colored("Goblin", "red", attrs=["bold"]), 2, 5, 23, 5, 9, "evil", 1, 1)
-ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 4, 5, 33, 10, 2, "evil", 1, 1)
+goblin = createCharacter(colored("Goblin", "red", attrs=["bold"]), 30, 5, 23, 5, 9, "evil", 1, 1)
+ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 63, 5, 33, 10, 2, "evil", 1, 1)
 
 characters = allCharacters([rogue, goblinShaman, priest, warrior, goblin, ogre])
-for x in characters:
-    print(str(x))
-
 
 while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + goblin["health"] + goblinShaman["health"] > 0 ):
 
 
     order = turnOrder(characters)
-    print(str(order))
+    #print(str(order))
     order, characters = sortOrder(order, characters)
-    print(str(order))
+    #print(str(order))
     print("----------------------------------------")
     whoGoesFirst(characters)
     actionPhase(characters)
