@@ -158,7 +158,23 @@ def mend():
 
     pass
 
+def poison(character):
+    
+    d4=random.randrange(1,4)
+    character["Poison"] = (character["Poison"] + d4)
+    print("Character gets poisonend for " + d4 +" rounds!")
 
+
+def protection(character):
+    if character["loyalty"] == "evil":
+        goblinShaman
+    elif character["loyalty"] == "good":
+        priest
+    pass
+
+    characters["armor"] *2
+
+    pass
 
 
 #Warrior choosing a spell
