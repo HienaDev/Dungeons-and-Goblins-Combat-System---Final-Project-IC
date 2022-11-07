@@ -294,10 +294,18 @@ def actionPhase(characters):
 def whoWon():
 
     if (warrior["health"] + priest["health"] + rogue["health"]  <= 0):
-        print("You've been defeated!")
+        pass
+        
+                                                      
+                                                      
 
     elif (ogre["health"] + goblin["health"] + goblinShaman["health"] <= 0 ):
-        print("You won!")
+        print("__     __ ____   _    _  __          __ _____  _   _ ")
+        print("\ \   / // __ \ | |  | | \ \        / /|_   _|| \ | |")
+        print(" \ \_/ /| |  | || |  | |  \ \  /\  / /   | |  |  \| |")
+        print("  \   / | |  | || |  | |   \ \/  \/ /    | |  | . ` |")
+        print("   | |  | |__| || |__| |    \  /\  /    _| |_ | |\  |")
+        print("   |_|   \____/  \____/      \/  \/    |_____||_| \_|")
 
     else:
         print("wtf")
