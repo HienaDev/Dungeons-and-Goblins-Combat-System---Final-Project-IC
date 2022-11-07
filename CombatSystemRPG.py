@@ -1,9 +1,10 @@
 import random
 import string
+from termcolor import colored, cprint  #run on console: pip install termcolor
 
 
 #Function to create a character
-def createCharacter(name, health, mana, armor, damage, initiative):
+def createCharacter(name, health, mana, armor, damage, initiative, poisoned,  loyalty):
 
     character = {
         "name" : name,
@@ -12,6 +13,7 @@ def createCharacter(name, health, mana, armor, damage, initiative):
         "armor" : armor,
         "damage" : damage,
         "initiative" : initiative
+        "poisoned" : poisoned
     }
 
     return (character)
@@ -77,11 +79,11 @@ def targetChoice(friendship):
         while(True):
             attackDecision = input("Who do you want to attack? \n 1 - Spider \n 2 - Ogre \n 3 - Monster\n\n" ).translate({ord(c): None for c in string.whitespace}).lower()
             if (attackDecision == "1"):
-                return (spider)
+                return goblin
             elif (attackDecision == "2"):
                 return (ogre)
             elif (attackDecision == "3"):
-                return (monster)
+                return goblinShaman
             else:
                 print("You need to choose an enemy to attack\n")
                 continue
@@ -151,7 +153,39 @@ def mend():
         print("\nPriest healed " + str((warrior["damage"] + d6)) + " life points to the Warrior!\n")
         print( enemy["name"] + " health after attack: " + str(enemy["health"]))
     pass
+
+def taunt():
+    pass
+
+def ArrowRain():
+    pass
+
+def poison():
+    d4 = random.randrange(1,4)
+    spellmpCost = 5
+
+
+    if (warrior["mana"] < spellmpCost):
+
+        print("You dont have enough mana to cast the spell!")
+
+        enemy = targetChoice(0)
+        print( enemy["name"] + " health before attack: " + str(enemy["health"]))
+        enemy["health"] = enemy["health"] - (d4 * 2)
+        print("\nWarrior dealt " + str(2 * d4) + " damage to the " + enemy["name"] + "\n")
+        print( enemy["name"] + " health after attack: " + str(enemy["health"]))
     
+
+    enemy = 0
+
+    pass
+
+def dmgReduction():
+    enemy
+    pass
+
+
+
 
 #Warrior choosing a spell
 def spellchooseW(character):
@@ -252,14 +286,14 @@ def actionPhase(characters):
 
         chooseAction(character)
 
-player = createCharacter("Player", 25, 10, 2, 5, 10)   
-monster = createCharacter("Monster", 30, 20, 23, 5, 6)   
-priest = createCharacter("Priest", 20, 25, 0, 2, 6)  
-warrior = createCharacter("Warrior", 32, 5, 2, 5, 2)  
-spider = createCharacter("Spider", 17, 5, 23, 5, 9)
-ogre = createCharacter("Ogre", 63, 5, 33, 10, 2 )
+rogue = createCharacter(colored("Rogue", "grey"), 25, 10, 2, 5, 10, "good", 0)  
+goblinShaman = createCharacter(colored("Goblin Shaman", "red"), 30, 20, 23, 5, 6, "evil", 0)  
+priest = createCharacter(colored("Priest", "grey"), 20, 25, 0, 2, 6, "good", 0)  
+warrior = createCharacter(colored("Warrior", "grey"), 32, 5, 2, 5, 2, "good", 0)  
+goblin = createCharacter(colored("Goblin", "red"), 17, 5, 23, 5, 9, "evil", 0)
+ogre = createCharacter(colored("Ogre", "red"), 63, 5, 33, 10, 2, "evil", 0
 
-characters = allCharacters([player, monster, priest, warrior, spider])
+characters = allCharacters([rogue, goblinshaman, priest, warrior, goblin])
 for x in characters:
     print(str(x))
 order = turnOrder(characters)
