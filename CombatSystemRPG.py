@@ -167,24 +167,19 @@ def poison():
     d4 = random.randrange(1,4)
     spellmpCost = 5
 
-
-    if (warrior["mana"] < spellmpCost):
-
-        print("You dont have enough mana to cast the spell!")
-
-        enemy = targetChoice(0)
-        print( enemy["name"] + " health before attack: " + str(enemy["health"]))
-        enemy["health"] = enemy["health"] - (d4 * 2)
-        print("\nWarrior dealt " + str(2 * d4) + " damage to the " + enemy["name"] + "\n")
-        print( enemy["name"] + " health after attack: " + str(enemy["health"]))
+    enemy = targetChoice(0)
+    print( enemy["name"] + " health before attack: " + str(enemy["health"]))
+    enemy["health"] = enemy["health"] - (d4 * 2)
+    print("\nWarrior dealt " + str(2 * d4) + " damage to the " + enemy["name"] + "\n")
+    print( enemy["name"] + " health after attack: " + str(enemy["health"]))
     
 
     enemy = 0
 
     pass
 
-def dmgReduction():
-    enemy
+def protection():
+    
     pass
 
 
@@ -192,40 +187,67 @@ def dmgReduction():
 
 #Warrior choosing a spell
 def spellchooseW(character):
+    spellMpCost = 5
+    if (warrior["mana"] < spellMpCost):
 
-    while(True):
-        print("--------------------------")
-        choice = input("What spell will you choose: \n 1 - RushDown\n\n").translate({ord(c): None for c in string.whitespace}).lower()
-        if (choice == "1" or choice == "rushdown"):
-            rushdown()
-            break
-        else:
-            print("You need to choose a spell\n")
+        print("You dont have enough mana to cast the spell!")
+    else:
+        while(True):
+            print("--------------------------")
+            choice = input("What spell will you choose: \n 1 - RushDown\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+            if (choice == "1" or choice == "rushdown"):
+                rushdown()
+                break
+            else:
+                print("You need to choose a spell\n")
             continue
 
 
 #Priest choosing a spell
 def spellChooseP(character):
+    
+    spellMpCost = 3
+
+    if (priest["mana"] < spellMpCost):
+
+        print("You dont have enough mana to cast the spell!")
+    else:
+        
+        while(True):
+                print(colored("--------------------------", ))
+                choice = input("What spell will you choose: \n 1 - Exorcism \n 2 - Mend\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+                if (choice == "1" or choice == "exorcism"):
+                    exorcism()
+                    break
+                elif (choice == "2" or choice == "mend"):
+                    mend()
+                    break
+                elif print("\nYou have to choose a spell\n"):
+                    pass
+
+
+def spellChooseGS(character):
+    
+    spellMpCost = 3
+
+    if (goblinShaman["mana"] < spellMpCost):
+
+        print("You dont have enough mana to cast the spell!")
+
 
     while(True):
         print(colored("--------------------------", ))
-        choice = input("What spell will you choose: \n 1 - Exorcism \n 2 - Mend\n\n").translate({ord(c): None for c in string.whitespace}).lower()
-        if (choice == "1" or choice == "exorcism"):
-            exorcism()
+        choice = input("What spell will you choose: \n 1 - Poison \n 2 - Protection\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+        if (choice == "1" or choice == "Poison"):
+            poison()
             break
-        elif (choice == "2" or choice == "mend"):
-            mend()
+        elif (choice == "2" or choice == "protection"):
+            protection()
             break
         else:
             print("\nYou have to choose a spell\n")
             pass
 
-
-
-    
-#def magicspells():
-#    spells = ['rushdown', 'exorcism', 'mend']
-#    if input ('rushdown')
 
 
 #Function that shows character's attack order
