@@ -223,6 +223,27 @@ def rest(characters):
     if characters["mana"] == 0:
         characters["mana"] == characters["mana"] + int(characters["mana"] * 2)
 
+#What the arrow rain spell does
+def arrowRain():
+
+    d10=random.randrange(1,10)
+    spellmpcost = 8
+
+    if (warrior["mana"] < spellmpcost):
+
+        print("You dont have enough mana to cast the spell!")
+
+    else:
+        target = targetChoice(0)
+        if (target == "0"):
+            return ("0")
+        print( target["name"] + " health before attack: " + str(target["health"]))
+        target["health"] = (target["health"]%2) + d10
+        print("\nWarrior dealt " + ((target["health"]%2) + d10) + " damage to the " + target["name"] + "\n")
+        print( target["name"] + " health after attack: " + str(target["health"]))
+        
+    pass
+
 
 
 #Warrior choosing a spell
@@ -333,6 +354,25 @@ def spellChooseGS(character):
             print("\nYou have to choose a spell\n")
             pass
 
+#Choose the spells of the Rougue   
+def spellChooseRg(character):
+    
+    spellMpCost = 8
+
+    if (goblinShaman["mana"] < spellMpCost):
+
+        print("You dont have enough mana to cast the spell!")
+
+
+    while(True):
+        print(colored("--------------------------", ))
+        choice = input("What spell will you choose: \n 1 - Arrow Rain \n 2 - Protection\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+        if (choice == "1" or choice == "Poison"):
+            poison()
+            break
+        else:
+            print("\nYou have to choose a spell\n")
+            pass
 
 
 #Function that shows character's attack order
