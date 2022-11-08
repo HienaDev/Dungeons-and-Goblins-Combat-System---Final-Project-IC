@@ -3,6 +3,7 @@ import string
 from termcolor import colored, cprint  #run on console: pip install termcolor
 import time
 import os
+import os
 
 #Function to create a character
 def createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned, alive):
@@ -32,6 +33,8 @@ def allCharacters(characters):
 def rollInitiative(character):
 
     d20 = random.randrange(1, 20)
+    print("\n" + character["name"] + " rolled a " + str(d20) + " his iniative is: " + colored(str(d20 + character["initiative"]), "yellow"))
+    time.sleep(2)
     print("\n" + character["name"] + " rolled a " + str(d20) + " his iniative is: " + colored(str(d20 + character["initiative"]), "yellow"))
     time.sleep(2)
     return (d20 + character["initiative"])
@@ -81,6 +84,23 @@ def printChoices(loyalty):
 
     choiceIndex = 0
     print("Who do you want to target? ")
+    for x in characters:
+        if (x["loyalty"] == loyalty):
+            choiceIndex += 1
+            print("\n " + str(choiceIndex) + " - " + x["name"], end= "")
+            print(" [ " + colored("HP: " , "green") + str(x["health"]), end = " /")
+            print(colored(" Mana ", "blue") + str(x["mana"]), end = " /")
+            print(colored(" Armor: ", "grey") + str(x["armor"]), end = " /")
+            print(colored(" Damage: ", "red") + str(x["damage"]), end = " /")
+            print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]) + " ]")
+
+    print("\n 0 - Go Back")
+
+
+def printChoices(loyalty):
+
+    choiceIndex = 0
+    print("Who do you want to target? ")
     for x in charactersUnsorted:
         if (x["loyalty"] == loyalty):
             choiceIndex += 1
@@ -105,7 +125,26 @@ def targetChoice(friendship):
             
             if (attackDecision == "1" or attackDecision == "goblin"):
 
+
+            printChoices("evil")
+
+            attackDecision = input("\n").translate({ord(c): None for c in string.whitespace}).lower()
+            
+            if (attackDecision == "1" or attackDecision == "goblin"):
+
                 return (goblin)
+            
+            elif (attackDecision == "2" or attackDecision == "ogre"):
+
+                return (ogre)
+            
+            elif (attackDecision == "3" or attackDecision == "goblinshaman"):
+
+                return (goblinShaman)
+            
+            elif (attackDecision == "0"):
+
+                return ("0")
             
             elif (attackDecision == "2" or attackDecision == "ogre"):
 
@@ -120,10 +159,17 @@ def targetChoice(friendship):
                 return ("0")
             else:
                 clear()
+                clear()
                 print("You need to choose an " + colored("Enemy", "red", attrs=["bold"]) + " to attack\n")
                 continue
 
+
     elif(friendship == 1):
+
+        printChoices("good")
+
+        attackDecision = input("\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+        if (attackDecision == "1"):
 
         printChoices("good")
 
@@ -202,6 +248,48 @@ def mend():
 
     
 
+def poison(character):
+    
+    d4=random.randrange(1,4)
+    character["Poison"] = (character["Poison"] + d4)
+    print("Character gets poisonend for " + d4 +" rounds!")
+
+
+def protection(character):
+    if character["loyalty"] == "evil":
+        goblinShaman
+    elif character["loyalty"] == "good":
+        priest
+    pass
+
+    characters["armor"] *2
+
+    pass
+
+def rest(characters):
+    if characters["mana"] == 0:
+        characters["mana"] == characters["mana"] + int(characters["mana"] * 2)
+
+#What the arrow rain spell does
+def arrowRain():
+
+    d10=random.randrange(1,10)
+    spellmpcost = 8
+
+    if (warrior["mana"] < spellmpcost):
+
+        print("You dont have enough mana to cast the spell!")
+
+    else:
+        target = targetChoice(0)
+        if (target == "0"):
+            return ("0")
+        print( target["name"] + " health before attack: " + str(target["health"]))
+        target["health"] = (target["health"]%2) + d10
+        print("\nWarrior dealt " + ((target["health"]%2) + d10) + " damage to the " + target["name"] + "\n")
+        print( target["name"] + " health after attack: " + str(target["health"]))
+        
+    pass
 
 
 
@@ -242,6 +330,35 @@ def spellChooseP(character):
 
         if (choice == "1" or choice == "exorcism"):
 
+            if (if (exorcism() == "0"):
+                continue
+            break
+
+        elif (choice == "2" or choice == "mend"):
+
+            if (mend() == "0"):
+                continue == "0"):
+                continue
+            break
+        
+        elif (choice == "0"):
+
+            return ("0")
+
+        else:
+
+            print("\nYou have to choose a spell\n")
+            pass
+
+def spellChooseP(character):
+
+    while(True):
+
+        print(colored("--------------------------", ))
+        choice = input("What spell will you choose: \n 1 - Exorcism \n 2 - Mend \n 0 - Go Back\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+
+        if (choice == "1" or choice == "exorcism"):
+
             if (exorcism() == "0"):
                 continue
             break
@@ -260,6 +377,7 @@ def spellChooseP(character):
 
             print("\nYou have to choose a spell\n")
             pass
+
 
 
 def spellChooseGS(character):
@@ -284,6 +402,25 @@ def spellChooseGS(character):
             print("\nYou have to choose a spell\n")
             pass
 
+#Choose the spells of the Rougue   
+def spellChooseRg(character):
+    
+    spellMpCost = 8
+
+    if (goblinShaman["mana"] < spellMpCost):
+
+        print("You dont have enough mana to cast the spell!")
+
+
+    while(True):
+        print(colored("--------------------------", ))
+        choice = input("What spell will you choose: \n 1 - Arrow Rain \n 2 - Protection\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+        if (choice == "1" or choice == "Poison"):
+            poison()
+            break
+        else:
+            print("\nYou have to choose a spell\n")
+            pass
 
 
 #Function that shows character's attack order
@@ -362,6 +499,8 @@ def attackPhase(character):
         print(colored("\n-----------------------------", "yellow"))
         print("     " + character["name"] + " attacks " + target["name"])
 
+        print(character["name"] + " attacks " + target["name"])
+
         if ((character["damage"] - target["armor"]) > 0):
             target["health"] = target["health"] - (character["damage"] - target["armor"])
             print( "     " + target["name"] + " took " + colored(str(character["damage"] - target["armor"]), "red", attrs = ["bold"]) + " damage!")
@@ -429,7 +568,7 @@ def chooseAction(character):
 def actionPhase(characters):
 
     for character in characters:
-        
+                
         chooseAction(character)
 
 
@@ -473,6 +612,8 @@ ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 63, 5, 5, 10, 2, 
 characters = allCharacters([rogue, priest, warrior, goblinShaman, goblin, ogre])
 
 charactersUnsorted = allCharacters([rogue, priest, warrior, goblin, ogre, goblinShaman])
+
+
 
 
 while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + goblin["health"] + goblinShaman["health"] > 0 ):
