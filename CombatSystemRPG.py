@@ -182,7 +182,7 @@ def arrowRain():
 
     else:
 
-        print(colored("\n-----------------------------", "red"))
+        print(colored("\n-----------------------------", "yellow"))
         print(rogue["name"] + " attacks every " + colored("enemy", "red") + "!\n")
 
         for target in characters:
@@ -191,10 +191,10 @@ def arrowRain():
                 if (((rogue["damage"] / 2) + d10) - target["armor"] > 0):
                     target["health"] = target["health"] - (int(((rogue["damage"] / 2) + d10)) - target["armor"])
                     print( target["name"] + " took " + colored(str((int(rogue["damage"] / 2)) + d10 - target["armor"]), "red", attrs = ["bold"]) + " damage!")
-                    print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!\n")
+                    print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
                 else:
                     print (target["name"] + " took no damage!")
-        print(colored("-----------------------------\n", "red"))
+        print(colored("-----------------------------\n", "yellow"))
 
 
 #What rushdown spell does
@@ -211,10 +211,12 @@ def rushdown():
         target = targetChoice(0)
         if (target == "0"):
             return ("0")
-        print( target["name"] + " health before attack: " + str(target["health"]))
+
+        print(colored("\n-----------------------------", "yellow"))
         target["health"] = target["health"] - (warrior["damage"] + d4)
-        print("\nWarrior dealt " + colored(str((warrior["damage"] + d4)), "red", attrs=["bold"]) + " damage to the " + target["name"] + "\n")
-        print( target["name"] + " health after attack: " + str(target["health"]))
+        print( target["name"] + " took " + colored(str((warrior["damage"] + d4)), "red", attrs = ["bold"]) + " damage!")
+        print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
+        print(colored("-----------------------------\n", "yellow"))
         
            
         
@@ -234,9 +236,11 @@ def exorcism():
         if (target == "0"):
             return ("0")
 
+        print(colored("\n-----------------------------", "yellow"))
         target["health"] = target["health"] - (d4 * 2)
         print( target["name"] + " took " + colored(str((d4 * 2)), "red", attrs = ["bold"]) + " damage!")
         print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
+        print(colored("-----------------------------\n", "yellow"))
     
 
 def mend():
@@ -256,7 +260,7 @@ def mend():
 
         if (target == "0"):
             return ("0")
-
+        print(colored("\n-----------------------------", "yellow"))
         if (target["health"] + (d6 + priest["damage"]) < target["maxHealth"]):
 
             target["health"] = target["health"] + (d6 + priest["damage"])
@@ -268,6 +272,8 @@ def mend():
             print("\nPriest healed " + str(target["maxHealth"] - target["health"]) + " life points to the " + target["name"] + "!\n")
             target["health"] = target["maxHealth"]
             print( target["name"] + " now has " + str(target["health"]) + colored(" HP", "green"))
+            
+        print(colored("-----------------------------\n", "yellow"))
 
     
 
@@ -282,7 +288,6 @@ def spellChooseWarrior():
 
     while(True):
 
-        print("--------------------------")
         choice = input("What spell will you choose: \n 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n").translate({ord(c): None for c in string.whitespace}).lower()
 
         if (choice == "1" or choice == "rushdown"):
@@ -312,7 +317,7 @@ def spellChooseRogue():
 
 
     while(True):
-        print(colored("--------------------------", ))
+
         print("What spell will you choose: ")
         print(" 1 - Arrow Rain ( AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 10), "red") + ") Cost: " + colored("8", "blue"))
         print(" 0 - Go Back\n\n")
@@ -336,7 +341,6 @@ def spellChoosePriest():
 
     while(True):
 
-        print(colored("--------------------------", ))
         print("What spell will you choose: ")
         print(" 1 - Exorcism (" + colored("2", "red") + "-" + colored("8", "red") + ") Cost: " + colored("5", "blue"))
         print(" 2 - Mend (" + colored(priest["damage"] + 1, "green") + "-" + colored(priest["damage"] + 6, "green") + ") Cost: " + colored("3", "blue"))
@@ -376,7 +380,8 @@ def spellChooseGS():
 
 
     while(True):
-        print(colored("--------------------------", ))
+ 
+
         choice = input("What spell will you choose: \n 1 - Poison \n 2 - Protection\n\n").translate({ord(c): None for c in string.whitespace}).lower()
         if (choice == "1" or choice == "Poison"):
             poison()
@@ -456,8 +461,7 @@ def attackPhase(character):
 
     elif (character["loyalty"] == "evil"):
 
-        print("")
-        print(character["name"] + " is deciding what to do...")
+        print("\n" + character["name"] + " is deciding what to do...")
         time.sleep(5)
 
         while(True):
@@ -465,12 +469,17 @@ def attackPhase(character):
        
 
             if (target == 1 and priest["alive"] == 1):
+
                 target = priest
                 break
+
             elif (target == 2 and warrior["alive"] == 1):
+
                 target = warrior
                 break   
+
             elif (target == 3 and rogue["alive"] == 1):
+
                 target = rogue
                 break
 
@@ -587,9 +596,18 @@ def whoWon():
     else:
         print("It's a tie?")
 
-#Initializing Variables
 
-clear = lambda: os.system('cls')
+def clear():
+
+    if (os.name == "nt"):
+
+        os.system("cls")
+
+    else:
+
+        os.system("clear")
+
+#Initializing Variables
 
 poisonDamage = 5
 
@@ -599,8 +617,6 @@ warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2,
 goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 20, 0, 5, 5, "evil", 0, 1)   
 goblin = createCharacter(colored("Goblin", "red", attrs=["bold"]), 10, 0, 0, 5, 7, "evil", 0, 1)
 ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 20, 0, 2, 3, 0, "evil", 0, 1)
-
-
 
 charactersUnsorted = allCharacters([rogue, priest, warrior, goblin, ogre, goblinShaman])
 characters = allCharacters([rogue, priest, warrior, goblinShaman, goblin, ogre])
