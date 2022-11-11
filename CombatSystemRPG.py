@@ -42,7 +42,7 @@ def turnOrder(characters):
     for character in characters:
 
         order.append(rollInitiative(character))
-    
+
     return(order)
 
 
@@ -169,6 +169,7 @@ def arrowRain():
 
     d10 = random.randrange(1,10)
     spellmpcost = 8
+    rogue["mana" - 8]
 
     if (rogue["mana"] < spellmpcost):
 
@@ -196,6 +197,7 @@ def rushdown():
     
     d4=random.randrange(1,4)
     spellmpcost = 5
+    warrior["mana" - 5]
 
     if (warrior["mana"] < spellmpcost):
 
@@ -220,6 +222,7 @@ def exorcism():
 
     d4=random.randrange(1,4)
     spellMpCost = 5
+    priest["mana" - 5]
 
     if (priest["mana"] < spellMpCost):
 
@@ -241,6 +244,7 @@ def mend():
 
     d6 = random.randrange(1,6)
     spellMpCost = 3
+    priest["mana" - 3]
 
     if (priest["mana"] < spellMpCost):
 
@@ -616,7 +620,7 @@ def whoWon():
 
     #Prints YOU LOST if ally party has 0 combined health
     if (warrior["health"] + priest["health"] + rogue["health"]  <= 0):
-        
+        #in case of losing 
         print(colored (" __     __ ____   _    _    _       ____    _____  _______ ", "red"))
         print(colored (" \ \   / // __ \ | |  | |  | |     / __ \  / ____||__   __|", "red"))
         print(colored ("  \ \_/ /| |  | || |  | |  | |    | |  | || (___     | |   ", "red"))
@@ -627,7 +631,7 @@ def whoWon():
 
     #Prints YOU WIN if enemy party has 0 combined health                                                         
     elif (ogre["health"] + goblin["health"] + goblinShaman["health"] <= 0 ):
-
+        #in case of wining 
         print(colored ("__     __ ____   _    _  __          __ _____  _   _ ", "yellow"))
         print(colored ("\ \   / // __ \ | |  | | \ \        / /|_   _|| \ | |", "yellow"))
         print(colored (" \ \_/ /| |  | || |  | |  \ \  /\  / /   | |  |  \| |", "yellow"))
