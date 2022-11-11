@@ -442,6 +442,7 @@ def spellPhase(character):
 #Function to attack
 def attackPhase(character):
 
+    #If the charater is an ally he chooses who he wants to attack
     if (character["loyalty"] == "good"):
 
         target = targetChoice(0)
