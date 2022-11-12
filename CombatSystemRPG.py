@@ -35,7 +35,7 @@ def createCharacter(name, health, mana, armor, damage, initiative, loyalty, pois
 def rollInitiative(character):
 
     #Rolls a 20 sided dice
-    d20 = random.randrange(1, 20)
+    d20 = random.randrange(1, 21)
 
     #If the character is alive it prints the character's iniciate, else it skips that character
     if (character["alive"] == 1):
@@ -130,7 +130,7 @@ def printChoices(loyalty):
 
                 print(" ", end="")
 
-            print("[ " + colored("HP: " , "green"))
+            print("[ " + colored("HP: " , "green"), end="")
             if (x["health"] < 10):
                 print("0", end="")
             print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
@@ -244,7 +244,7 @@ def targetChoice(friendship):
 def damageBuff():
     	
     #Roll a 7 sided dice
-    d7 = random.randrange(1,7)
+    d7 = random.randrange(1,8)
 
     print(colored("\n-----------------------------", "red"))
     
@@ -271,7 +271,7 @@ def damageBuff():
 def arrowRain():
 
     #Roll a 10 sided dice
-    d5 = random.randrange(1,5)
+    d5 = random.randrange(1,6)
 
     #Arrow Rains's mana cost
     spellMpCost = 8
@@ -301,7 +301,7 @@ def poison():
     #Cycle happens until goblin shaman picks an ally that's alive
     while(True):
         
-        target = random.randrange(1,3)
+        target = random.randrange(1, 4)
     
         if (target == 1 and priest["alive"] == 1):
 
@@ -319,7 +319,7 @@ def poison():
             break
 
     #Roll a 4 sided dice to choose how many turns the target is poisoned for
-    d4 = random.randrange(1,4)
+    d4 = random.randrange(1, 5)
 
     #Add the amount of turns rolled on the dice to the amount of turns the target is poisoned for
     target["poisoned"] += d4
@@ -335,7 +335,7 @@ def poison():
 def rushDown():
     
     #Roll a 4 sided dice
-    d4=random.randrange(1,4)
+    d4=random.randrange(1, 5)
 
     #Rushdown's mana cost
     spellMpCost = 5
@@ -373,7 +373,7 @@ def rushDown():
 def exorcism():
 
     #Roll a 4 sided dice
-    d4=random.randrange(1,4)
+    d4=random.randrange(1, 5)
 
     #Excorcism's mana cost
     spellMpCost = 5
@@ -409,7 +409,7 @@ def exorcism():
 def mend():
 
     #Roll a 6 sided dice
-    d6 = random.randrange(1,6)
+    d6 = random.randrange(1, 7)
 
     #Mend's mana cost
     spellMpCost = 3
@@ -580,8 +580,7 @@ def spellChoosePriest():
 def spellChooseGS():
     
     #If he gets a 1 or 2 (66% chance) he chooses poison, if he gets a 3  (33% chance) he choose the damage buff spell
-    d3 = random.randrange(1,3)
-
+    d3 = random.randrange(1, 4)
     #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
         if (d3 == 1 or d3 == 2):
@@ -723,7 +722,7 @@ def attackPhase(character):
 
         #Choose a random character from the ally team to attack
         while(True):
-            target = random.randrange(1, 3)
+            target = random.randrange(1, 4)
        
 
             if (target == 1 and priest["alive"] == 1):
@@ -752,16 +751,16 @@ def attackPhase(character):
         if (character["name"] == goblin["name"]):
 
             #Damage * d2
-            d2 = random.randrange(2, 4)
-            print("GOBLIN CRIT ROLE: " + str(d2))
+            d2 = random.randrange(2, 5)
             
         #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
             
-            damage = ((character["damage"] * int(d2 /2)) - target["armor"])
+            damage = int(((character["damage"] * int(d2 /2)) - target["armor"]))
         else:
 
-            damage = ((character["damage"] * 2 * int(d2 /2)) - target["armor"])
+            character["damageBoost"] = 0
+            damage = int(((character["damage"] * 2 * int(d2 /2)) - target["armor"]))
 
         #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
@@ -837,7 +836,7 @@ def chooseAction(character):
             #If the enemy is a goblinShaman he has a chance of using spells, since he's the only spell caster on the enemy side
             if (character["name"] == goblinShaman["name"]):
                 
-                d4 = random.randrange(1, 5)
+                d4 = random.randrange(1, 6)
                 
                 #20% chance of the Goblin Shaman attacking 
                 if (d4 == 1):
@@ -922,7 +921,7 @@ def actionPhase(characters):
                     x["name"] = colored(x["name"], attrs= ["reverse"])
 
             #Give time for the player to see what happened in that turn
-            time.sleep(8)
+            time.sleep(6)
 
         clear()
 
