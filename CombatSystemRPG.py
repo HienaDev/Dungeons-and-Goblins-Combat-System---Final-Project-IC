@@ -3,12 +3,11 @@ import string
 from termcolor import colored, cprint  #run on console: pip install termcolor
 import time
 import os
-import keyboard #run on console: pip install keyboard
 
 
-def waitForPress():
+def deleteInput():
 
-    input("Press Enter to continue...")
+    print ("\033[A                             \033[A")
 
 
 #Function to create a character
@@ -120,6 +119,7 @@ def targetChoice(friendship):
             printChoices("evil")
 
             attackDecision = input("\n").translate({ord(c): None for c in string.whitespace}).lower()
+            deleteInput()
             
             if ((attackDecision == "1" and goblin["alive"] == 1) or (attackDecision == "goblin" and goblin["alive"] == 1)):
 
@@ -150,6 +150,8 @@ def targetChoice(friendship):
             printChoices("good")
 
             attackDecision = input("\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+            deleteInput()
+
             if ((attackDecision == "1" and rogue["alive"] == 1) or (attackDecision == "rogue" and rogue["alive"] == 1)):
 
                     return (rogue)
@@ -208,7 +210,8 @@ def arrowRain():
 
     if (rogue["mana"] < spellMpCost):
 
-        print("You dont have enough mana to cast the spell!")
+        print("You dont have enough mana to cast that spell!")
+        return("0")
 
     else:
 
@@ -237,7 +240,8 @@ def rushdown():
 
     if (warrior["mana"] < spellMpCost):
 
-        print("You dont have enough mana to cast the spell!")
+        print("You dont have enough mana to cast that spell!")
+        return("0")
 
     else:
 
@@ -267,7 +271,8 @@ def exorcism():
 
     if (priest["mana"] < spellMpCost):
 
-        print("You dont have enough mana to cast the spell!")
+        print("You dont have enough mana to cast that spell!")
+        return("0")
 
     else:
 
@@ -293,7 +298,7 @@ def mend():
 
     if (priest["mana"] < spellMpCost):
 
-        print("You dont have enough mana to cast the spell!")
+        print("You dont have enough mana to cast that spell!")
         return("0")
 
     else:
@@ -325,13 +330,16 @@ def mend():
 
 #Warrior choosing a spell
 def spellChooseWarrior():
-    spellMpCost = 5
-    if (warrior["mana"] < spellMpCost):
-        pass
+
 
     while(True):
 
-        choice = input("What spell will you choose: \n 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+        clear()
+        
+        print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + "mana: ")
+        print("1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n")
+        choice = input().translate({ord(c): None for c in string.whitespace}).lower()
+        deleteInput()
 
         if (choice == "1" or choice == "rushdown"):
 
@@ -352,19 +360,15 @@ def spellChooseWarrior():
 #Rogue choosing a spell
 def spellChooseRogue():
 
-    spellMpCost = 8
-
-    if (goblinShaman["mana"] < spellMpCost):
-
-        print("You dont have enough mana to cast the spell!")
-
-
     while(True):
 
-        print("What spell will you choose: ")
-        print(" 1 - Arrow Rain ( AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 10), "red") + ") Cost: " + colored("8", "blue"))
+        clear()
+        print("Choose a spell, you have " + colored(str(rogue["mana"]), "blue") + "mana: ")
+        print(" 1 - Arrow Rain (AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 10), "red") + ") Cost: " + colored("8", "blue"))
         print(" 0 - Go Back\n\n")
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
+        deleteInput()
+
         if (choice == "1" or choice == "arrowrain"):
             arrowRain()
             break
@@ -384,12 +388,14 @@ def spellChoosePriest():
 
     while(True):
 
-        print("What spell will you choose: ")
+        clear()
+        print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + "mana: ")
         print(" 1 - Exorcism (" + colored("2", "red") + "-" + colored("8", "red") + ") Cost: " + colored("5", "blue"))
         print(" 2 - Mend (" + colored(priest["damage"] + 1, "green") + "-" + colored(priest["damage"] + 6, "green") + ") Cost: " + colored("3", "blue"))
         print(" 0 - Go Back\n\n")
 
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
+        deleteInput()
 
         if (choice == "1" or choice == "exorcism"):
 
@@ -459,6 +465,7 @@ def whoGoesFirst(characters):
 #Function to know who is using each spell
 def spellPhase(character):
 
+    #Each character has a differente spell phase
     if (character["name"] == priest["name"]):
 
         if (spellChoosePriest() == "0"):
@@ -493,26 +500,32 @@ def attackPhase(character):
         target = targetChoice(0)
 
         if (target == "0"):
-            return "0"
+            return ("0")
 
 
-        #Applying the damage and displaying it on screen
+        #Dealing the damage and displaying it on screen
         print(colored("\n-----------------------------", "yellow"))
         print(character["name"] + " attacks " + target["name"])
         
+        #If the character has damage boost deals double damage
         if (character["damageBoost"] == 0):
 
             damage = (character["damage"] - target["armor"])
+
         else:
 
             damage = ((character["damage"] * 2) - target["armor"])
 
+        #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
+
             target["health"] = target["health"] - damage
             print( target["name"] + " took " + colored(str(damage), "red", attrs = ["bold"]) + " damage!")
             print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
         else:
+
             print (target["name"] + " took no damage!")
+
         print(colored("-----------------------------\n", "yellow"))
         
     #If the characters is an enemy he attacks here
@@ -599,15 +612,16 @@ def chooseAction(character):
         #If its an ally character (loyalty = good) he chooses what to do 
         if (character["loyalty"] == "good"):
 
-            print("--------------------------")
+            clear()
             print("You are: " + character["name"])
             choice = input("Would you like to: \n 1 - Attack \n 2 - Use a spell \n 3 - Rest (Recover "+ colored("mana", "blue") +")\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+            deleteInput()
 
         #If its an enemy character (loyalty = evil) his actions are randomly chosen
         else:
 
             #If the enemy is a goblinShaman he has a chance of using spells, since he's the only spell caster on the enemy side
-            if (character["name"] != goblinShaman["name"]):
+            if (character["name"] == goblinShaman["name"]):
                 
                 d4 = random.randrange(1, 5)
                 
