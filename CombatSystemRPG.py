@@ -422,7 +422,7 @@ def mend():
         if (target["health"] + (d6 + priest["damage"]) < target["maxHealth"]):
 
             target["health"] = target["health"] + (d6 + priest["damage"])
-            print("\nPriest healed " + str((target["damage"] + d6)) + " life points to the " + target["name"] + "!\n")
+            print("Priest healed " + str((target["damage"] + d6)) + " life points to the " + target["name"] + "!")
             print( target["name"] + " now has " + str(target["health"]) + colored(" HP", "green"))
 
 
@@ -430,7 +430,7 @@ def mend():
         #the character's health becomes his max health
         else:
 
-            print("\nPriest healed " + str(target["maxHealth"] - target["health"]) + " life points to the " + target["name"] + "!\n")
+            print("Priest healed " + str(target["maxHealth"] - target["health"]) + " life points to the " + target["name"] + "!")
             target["health"] = target["maxHealth"]
             print( target["name"] + " now has " + str(target["health"]) + colored(" HP", "green"))
             
@@ -560,7 +560,7 @@ def spellChoosePriest():
 def spellChooseGS():
     
     #If he gets a 1 or 2 (66% chance) he chooses poison, if he gets a 3  (33% chance) he choose the damage buff spell
-    d3 = 1#random.randrange(1,3)
+    d3 = random.randrange(1,3)
 
     #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
@@ -739,7 +739,7 @@ def rest(character):
     if(character["name"] == warrior["name"]):
         character["mana"] = character["maxMana"]
         print(colored("\n-----------------------------", "blue"))
-        print(character["name"] + " restored " + colored(str((character["maxMana"]) - (character["mana"])), "blue"))
+        print(character["name"] + " restored " + colored(str((character["maxMana"]) - (character["mana"])), "blue") + " mana!")
         print(colored("-----------------------------\n", "blue"))
     
     else:
@@ -748,7 +748,7 @@ def rest(character):
 
             character["mana"] = character["mana"] + manaRecover
             print(colored("\n-----------------------------", "blue"))
-            print(character["name"] + " rested and recovered " + str(manaRecover) + " points! ")
+            print(character["name"] + " rested and recovered " + str(manaRecover) + " mana! ")
             print(colored("-----------------------------\n", "blue"))
 
 
@@ -757,7 +757,7 @@ def rest(character):
 
             character["mana"] = character["maxMana"]
             print(colored("\n-----------------------------", "blue"))
-            print(character["name"] + " restored " + colored(str((character["maxMana"]) - (character["mana"])), "blue"))
+            print(character["name"] + " restored " + colored(str((character["maxMana"]) - (character["mana"])), "blue") + " mana!")
             print(colored("-----------------------------\n", "blue"))
 
 
@@ -772,7 +772,9 @@ def chooseAction(character):
         print(colored("\n-----------------------------\n", "green") + character["name"] + " is poisoned he takes " + colored(poisonDamage, "green", attrs=["bold"]) + " damage!")
         character["health"] = character["health"] - poisonDamage
         print("Health is now " + str(character["health"]) + colored("\nPoisoned", "green", attrs=["bold"]) + " turns left: " + str(character["poisoned"]) + colored("\n-------------------------------\n", "green"))
-        
+        if(character["health"] <= 0):
+            character["alive"] = 0
+
     #If character is alive he acts
     while(True and character["alive"] == 1):
             
