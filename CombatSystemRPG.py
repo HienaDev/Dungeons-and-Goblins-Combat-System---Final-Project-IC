@@ -714,16 +714,16 @@ def attackPhase(character):
         if (character["name"] == goblin["name"]):
 
             #Damage * d2
-            d2 = random.randrange(1,2)
+            d2 = random.randrange(2, 4)
             print("GOBLIN CRIT ROLE: " + str(d2))
             
         #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
             
-            damage = ((character["damage"] * d2) - target["armor"])
+            damage = ((character["damage"] * int(d2 /2)) - target["armor"])
         else:
 
-            damage = ((character["damage"] * 2 * d2) - target["armor"])
+            damage = ((character["damage"] * 2 * int(d2 /2)) - target["armor"])
 
         #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
