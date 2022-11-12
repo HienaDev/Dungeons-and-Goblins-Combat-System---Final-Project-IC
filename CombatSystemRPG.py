@@ -121,10 +121,26 @@ def printChoices(loyalty):
     print("Who do you want to target? ")
     for x in charactersUnsorted:
         if (x["loyalty"] == loyalty):
+            
             choiceIndex += 1
-            print("\n " + str(choiceIndex) + " - " + x["name"], end= "")
-            print(" [ " + colored("HP: " , "green") + str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
-            print(colored(" Mana ", "blue") + str(x["mana"]), end = " |")
+
+            print(str(choiceIndex) + " - " + x["name"], end = "")
+
+            for _ in range(0, (28 - len(x["name"]))):
+
+                print(" ", end="")
+
+            print("[ " + colored("HP: " , "green"))
+            if (x["health"] < 10):
+                print("0", end="")
+            print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
+            print(colored(" Mana: ", "blue"), end="")
+            if (x["mana"] < 10):
+                print("0", end="")
+            print(str(x["mana"]) + "/", end= "")
+            if (x["maxMana"] < 10):
+                print("0", end="")
+            print(str(x["maxMana"]), end = " |")
             print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
             print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
             print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
@@ -231,7 +247,7 @@ def damageBuff():
     d7 = random.randrange(1,7)
 
     print(colored("\n-----------------------------", "red"))
-
+    
     #If the goblin shaman rolls a 1 (14% chance) he fails to cast the spell
     if (d7 == 1):
 
@@ -608,8 +624,21 @@ def whoGoesFirst(characters):
 
             print(str(i) + " - " + x["name"], end = "")
 
-            print("              [ " + colored("HP: " , "green") + str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
-            print(colored(" Mana ", "blue") + str(x["mana"]), end = " |")
+            for _ in range(0, (28 - len(x["name"]))):
+
+                print(" ", end="")
+
+            print("[ " + colored("HP: " , "green"), end="")
+            if (x["health"] < 10):
+                print("0", end="")
+            print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
+            print(colored(" Mana: ", "blue"), end="")
+            if (x["mana"] < 10):
+                print("0", end="")
+            print(str(x["mana"]) + "/", end= "")
+            if (x["maxMana"] < 10):
+                print("0", end="")
+            print(str(x["maxMana"]), end = " |")
             print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
             print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
             print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
@@ -717,7 +746,7 @@ def attackPhase(character):
         print("" + character["name"] + " attacks " + target["name"])
 
         #If its any other enemy than damage * 1
-        d2 = 1
+        d2 = 2
 
         #If the enemy is a goblin he has 50% chance to deal double damage
         if (character["name"] == goblin["name"]):
