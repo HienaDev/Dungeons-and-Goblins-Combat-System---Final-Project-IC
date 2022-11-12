@@ -459,6 +459,7 @@ def spellChooseWarrior():
         if (choice == "1" or choice == "rushdown"):
 
             if (rushDown() == "0"):
+                clear()
                 continue
             break
         
