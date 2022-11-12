@@ -289,7 +289,36 @@ def arrowRain():
         print(colored("-----------------------------\n", "yellow"))
 
 
-#Use the warrior's spell rushdown
+def poison():
+
+     
+    while(True):
+        
+        target = random.randrange(1,3)
+    
+        if (target == 1 and priest["alive"] == 1):
+
+                target = priest 
+                break 
+
+        elif (target == 2 and warrior["alive"] == 1):
+
+                target = warrior
+                break  
+
+        elif (target == 3 and rogue["alive"] == 1):
+
+                target = rogue
+                break
+
+    
+    d4 = random.randrange(1,4)
+    target["poisoned"] = (target["poisoned"] + d4)
+    
+    print(goblinShaman["name"] + " applied the spell poison to " + target["name"] + " !")
+    print (target["name"] + " is poisoned for " + str(d4) + " more rounds!")
+
+#Use the warrior's spell exorcism
 def rushDown():
     
     #Roll a 4 sided dice
@@ -426,7 +455,8 @@ def spellChooseWarrior():
 
         #Display possible options
         clear()
-        print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + "mana: ")
+        
+        print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + " mana: ")
         print("1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n")
         
         #Get the player's input
@@ -692,7 +722,8 @@ def attackPhase(character):
 
 
 
-#The character rests and recovers 2/3 of its max mana
+#The~
+#  character rests and recovers 2/3 of its max mana
 def rest(character):
 
     manaRecover = int(character["maxMana"] * (2/3))
@@ -708,7 +739,7 @@ def rest(character):
     else:
 
         character["mana"] = character["maxMana"]
-        print(character["name"] + " healed " + (character["maxMana"]) - (character["mana"]))
+        print(character["name"] + " restored " + str((character["maxMana"]) - (character["mana"])))
 
 
 
