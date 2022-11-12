@@ -251,7 +251,7 @@ def damageBuff():
 
 
 
-#Use the warrior's spell arrow rain
+#Use the rogue's spell arrow rain
 def arrowRain():
 
     #Roll a 10 sided dice
@@ -279,9 +279,10 @@ def arrowRain():
 
     print(colored("-----------------------------\n", "white"))
 
-
+#Use the goblin shaman's spell poison
 def poison():
 
+    #Cycle happens until goblin shaman picks an ally that's alive
     while(True):
         
         target = random.randrange(1,3)
@@ -301,14 +302,19 @@ def poison():
             target = rogue
             break
 
-    
+    #Roll a 4 sided dice to choose how many turns the target is poisoned for
     d4 = random.randrange(1,4)
     print("DEBUGGER TARGET POISON BEFORE: " + target["name"] + " " + str(target["poisoned"]))
+
+    #Add the amount of turns rolled on the dice to the amount of turns the target is poisoned for
     target["poisoned"] += d4
+
+    #Display how much poisoned was applied and to who
     print(colored("\n-----------------------------", "red"))
     print(goblinShaman["name"] + " applied the spell poison to " + target["name"] + " !")
     print (target["name"] + " is poisoned for " + str(d4) + " more rounds!")
     print(colored("-----------------------------\n", "red"))
+
     print("DEBUGGER TARGET POISON:" + target["name"] + " " + str(target["poisoned"]))
 
 
@@ -709,6 +715,7 @@ def attackPhase(character):
 
             #Damage * d2
             d2 = random.randrange(1,2)
+            print("GOBLIN CRIT ROLE: " + str(d2))
             
         #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
@@ -857,27 +864,24 @@ def actionPhase(characters):
         #Display the turn order everytime someone's turn starts
         whoGoesFirst(characters)
 
-        #Check if any character died inbetween character turns, to make sure a dead character cannot act, and changes his alive value to 0
-        for x in characters:
-
-            if (x["health"] <= 0 and x["alive"] == 1):
-
-                print(colored("\n--------------------------", "red",  attrs=["bold"]))
-                print("     " + x["name"] + " is downed!")
-                print(colored("--------------------------\n", "red",  attrs=["bold"]))
-                x["alive"] = 0
-                x["health"] = 0
-                x["name"] = colored(x["name"], attrs= ["reverse"])
-
-        
-        """ for x in charactersUnsorted:
-            if x["name"] == character["name"]:
-                x["name"] = character["name"] """
+  
         
         #Check if the character is alive, and if he is he takes his turn
         if (character["alive"] == 1):
 
             chooseAction(character)
+
+            #Check if any character died inbetween character turns, to make sure a dead character cannot act, and changes his alive value to 0
+            for x in characters:
+
+                if (x["health"] <= 0 and x["alive"] == 1):
+
+                    print(colored("\n--------------------------", "red",  attrs=["bold"]))
+                    print("     " + x["name"] + " is downed!")
+                    print(colored("--------------------------\n", "red",  attrs=["bold"]))
+                    x["alive"] = 0
+                    x["health"] = 0
+                    x["name"] = colored(x["name"], attrs= ["reverse"])
 
             #Give time for the player to see what happened in that turn
             time.sleep(8)
