@@ -39,7 +39,7 @@ def rollInitiative(character):
 
     #If the character is alive it prints the character's iniciate, else it skips that character
     if (character["alive"] == 1):
-        print("\n" + character["name"] + " rolled a " + str(d20) + " his iniative is: " + colored(str(d20 + character["initiative"]), "yellow"))
+        print("\n" + character["name"] + " rolled a " + str(d20) + " his iniative is: " + colored(str(d20 + character["initiative"]), "yellow")) 
         time.sleep(1.5)
     
     #Returns the character's iniciative
@@ -304,7 +304,6 @@ def poison():
 
     #Roll a 4 sided dice to choose how many turns the target is poisoned for
     d4 = random.randrange(1,4)
-    print("DEBUGGER TARGET POISON BEFORE: " + target["name"] + " " + str(target["poisoned"]))
 
     #Add the amount of turns rolled on the dice to the amount of turns the target is poisoned for
     target["poisoned"] += d4
@@ -314,8 +313,6 @@ def poison():
     print(goblinShaman["name"] + " applied the spell poison to " + target["name"] + " !")
     print (target["name"] + " is poisoned for " + str(d4) + " more rounds!")
     print(colored("-----------------------------\n", "red"))
-
-    print("DEBUGGER TARGET POISON:" + target["name"] + " " + str(target["poisoned"]))
 
 
 #Use the warrior's spell exorcism
@@ -606,8 +603,20 @@ def whoGoesFirst(characters):
 
         #Only displays alive characters on terminal
         if (x["alive"] == 1):
+            
             i += 1
-            print(str(i) + " - " + x["name"])
+
+            print(str(i) + " - " + x["name"], end = "")
+
+            print("              [ " + colored("HP: " , "green") + str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
+            print(colored(" Mana ", "blue") + str(x["mana"]), end = " |")
+            print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
+            print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
+            print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
+            if (x["damageBoost"] > 0):
+                print(colored(" 2x Damage", "red", attrs= ["bold"] ) +  " ]")
+            else:
+                print(colored(" 2x Damage", "grey", attrs= ["bold"] ) +  " ]")
 
 
 
