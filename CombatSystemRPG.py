@@ -4,7 +4,7 @@ from termcolor import colored, cprint  #run on console: pip install termcolor
 import time
 import os
 
-
+#Deletes the user's input from displaying in the terminal
 def deleteInput():
 
     print ("\033[A                             \033[A")
@@ -241,8 +241,8 @@ def poison(character):
     print(goblinShaman["name"] + " applied the spell poison to " + character["name"] + " !")
     print (character["name"] + " is poisoned for " + str(d4) + " more rounds!")
 
-#What rushdown spell does
-def rushdown():
+#Use the warrior's spell exorcism
+def rushDown():
     
     d4=random.randrange(1,4)
     spellMpCost = 5
@@ -271,28 +271,35 @@ def rushdown():
            
         
           
-#What exorcism spell does
+#Use the priest's spell exorcism
 def exorcism():
 
+    #Roll a 4 sided dice
     d4=random.randrange(1,4)
+
+    #Excorcism's mana cost
     spellMpCost = 5
 
-
+    #If the priest doesnt have enough mana to use mend he goes back to choosing spells
     if (priest["mana"] < spellMpCost):
 
         print("You dont have enough mana to cast that spell!")
         return("0")
 
+    #Else he casts exorcism
     else:
 
-        
-
+        #Choose who to target with exorcism
         target = targetChoice(0)
+
+        #If he chooses 0 he goes back to choosing the spells
         if (target == "0"):
             return ("0")
 
+        #Reduces priest's mana by the spell cost
         priest["mana"] = priest["mana"] - spellMpCost
 
+        #Display the damage dealt by the priest to the target
         print(colored("\n-----------------------------", "yellow"))
         target["health"] = target["health"] - (d4 * 2)
         print( target["name"] + " took " + colored(str((d4 * 2)), "red", attrs = ["bold"]) + " damage!")
@@ -300,30 +307,48 @@ def exorcism():
         print(colored("-----------------------------\n", "yellow"))
     
 
+#Use the priest's spell mend
 def mend():
 
+    #Roll a 6 sided dice
     d6 = random.randrange(1,6)
+
+    #Mend's mana cost
     spellMpCost = 3
 
+    #If the priest doesnt have enough mana to use mend he goes back to choosing spells
     if (priest["mana"] < spellMpCost):
 
         print("You dont have enough mana to cast that spell!")
         return("0")
 
+    #Else he casts mend
     else:
 
-        
+        #Choose who to heal
         target = targetChoice(1)
 
+        #If he chooses 0 he goes back to choosing the spells
         if (target == "0"):
             return ("0")
+
+        #Displays the amount of healing on the screen
         print(colored("\n-----------------------------", "yellow"))
+
+        #Reduces priest's mana by the spell cost
+        priest["mana"] = priest["mana"] - spellMpCost
+
+        #If after casting mend the amount of health he recovers doesnt break the max health threshold of the characters, 
+        #he recovers that amount
         if (target["health"] + (d6 + priest["damage"]) < target["maxHealth"]):
 
             target["health"] = target["health"] + (d6 + priest["damage"])
             print("\nPriest healed " + str((target["damage"] + d6)) + " life points to the " + target["name"] + "!\n")
             print( target["name"] + " now has " + str(target["health"]) + colored(" HP", "green"))
-        
+
+
+        #If after casting mend the amount of health he recovers breaks the max health threshold of the character, 
+        #the character's health becomes his max health
         else:
 
             print("\nPriest healed " + str(target["maxHealth"] - target["health"]) + " life points to the " + target["name"] + "!\n")
@@ -340,26 +365,32 @@ def mend():
 #Warrior choosing a spell
 def spellChooseWarrior():
 
-
+    #Loop so the player can only choose one of the 2 options displayed
     while(True):
 
+        #Display possible options
         clear()
         
         print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + " mana: ")
         print("1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n")
+        
+        #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
+        #Go to function rushDown if he chooses 1
         if (choice == "1" or choice == "rushdown"):
 
-            if (rushdown() == "0"):
+            if (rushDown() == "0"):
                 continue
             break
         
+        #Go back if he chooses 0
         elif (choice == "0"):
 
             return ("0")
 
+        #Print this if its an invalid choice
         else:
 
             print("\nYou need to choose a spell\n")
@@ -369,23 +400,30 @@ def spellChooseWarrior():
 #Rogue choosing a spell
 def spellChooseRogue():
 
+    #Loop so the player can only choose one of the 2 options displayed
     while(True):
 
+        #Display possible options
         clear()
         print("Choose a spell, you have " + colored(str(rogue["mana"]), "blue") + "mana: ")
         print(" 1 - Arrow Rain (AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 10), "red") + ") Cost: " + colored("8", "blue"))
         print(" 0 - Go Back\n\n")
+
+        #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
+        #Go to function arrowRain if he chooses 1
         if (choice == "1" or choice == "arrowrain"):
             arrowRain()
             break
-
+        
+        #Go back if he chooses 0
         elif (choice == "0"):
 
             return ("0")
 
+        #Print this if its an invalid choice
         else:
             print("\nYou need to choose a spell\n")
             pass
@@ -395,43 +433,52 @@ def spellChooseRogue():
 #Priest choosing a spell
 def spellChoosePriest():
 
+    #Loop so the player can only choose one of the 3 options displayed
     while(True):
-
+        
+        #Display possible options
         clear()
         print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + "mana: ")
         print(" 1 - Exorcism (" + colored("2", "red") + "-" + colored("8", "red") + ") Cost: " + colored("5", "blue"))
         print(" 2 - Mend (" + colored(priest["damage"] + 1, "green") + "-" + colored(priest["damage"] + 6, "green") + ") Cost: " + colored("3", "blue"))
         print(" 0 - Go Back\n\n")
 
+        #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
+        #Go to function exorcism if he chooses 1
         if (choice == "1" or choice == "exorcism"):
 
             if (exorcism() == "0"):
                 continue
             break
 
+        #Go to function mend if he chooses 2
         elif (choice == "2" or choice == "mend"):
 
             if (mend() == "0"):
                 continue
             break
         
+        #Go back if he chooses 0
         elif (choice == "0"):
 
             return ("0")
 
+        #Print this if its an invalid choice
         else:
 
             print("\nYou need to choose a spell\n")
-            pass
 
 
+#Spell choosing for the goblin shaman
 def spellChooseGS():
     
+    #If he gets a 1 or 2 (66% chance) he chooses poison, if he gets a 3  (33% chance) he choose the damage buff spell
     d3 = random.randrange(1,3)
 
+    #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
         if (d3 == 1 or d3 == 2):
 
@@ -457,7 +504,7 @@ def spellChooseGS():
 
 
 
-#Function that shows character's attack order
+#Function that shows character's attack order on the terminal
 def whoGoesFirst(characters):
     
     print("Turn order:\n")
@@ -466,8 +513,10 @@ def whoGoesFirst(characters):
     
     for x in characters:
 
-        i += 1
-        print(str(i) + " - " + x["name"])
+        #Only displays alive characters on terminal
+        if (x["alive"] == 1):
+            i += 1
+            print(str(i) + " - " + x["name"])
 
 
 
@@ -543,6 +592,7 @@ def attackPhase(character):
         print("\n" + character["name"] + " is deciding what to do...")
         time.sleep(5)
 
+        #Choose a random character from the ally team to attack
         while(True):
             target = random.randrange(1, 3)
        
@@ -565,6 +615,8 @@ def attackPhase(character):
         print(colored("\n-----------------------------", "red"))
         print("" + character["name"] + " attacks " + target["name"])
 
+
+        #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
             
             damage = (character["damage"] - target["armor"])
@@ -572,6 +624,7 @@ def attackPhase(character):
 
             damage = ((character["damage"] * 2) - target["armor"])
 
+        #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
             target["health"] = target["health"] - damage
             print( target["name"] + " took " + colored(str(damage), "red", attrs = ["bold"]) + " damage!")
