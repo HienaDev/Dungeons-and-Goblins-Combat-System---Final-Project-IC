@@ -3,6 +3,13 @@ import string
 from termcolor import colored, cprint  #run on console: pip install termcolor
 import time
 import os
+import keyboard #run on console: pip install keyboard
+
+
+def waitForPress():
+
+    input("Press Enter to continue...")
+
 
 #Function to create a character
 def createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned, damageBoost, alive):
@@ -96,7 +103,7 @@ def printChoices(loyalty):
             print(colored(" Mana ", "blue") + str(x["mana"]), end = " |")
             print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
             print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
-            print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]))
+            print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
             if (x["damageBoost"] > 0):
                 print(colored(" 2x Damage", "red", attrs= ["bold"] ) +  " ]")
             else:
@@ -168,13 +175,25 @@ def targetChoice(friendship):
 
     return (attackDecision)
 
+
+
 def damageBuff():
+    	
+
+    d7 = random.randrange(1,7)
 
     print(colored("\n-----------------------------", "red"))
-    print(goblinShaman["name"] + " boosts the " + colored("enemies", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )\n")
-    for x in characters:
-        if (x["loyalty"] == "evil"):
-            x["damageBoost"] += 1
+
+    if (d7 == 1):
+
+        print(goblinShaman["name"] + " tries to buff the enemies but fails!")
+    else:
+        
+        print(goblinShaman["name"] + " buffs the " + colored("enemies", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )\n")
+        for x in characters:
+            if (x["loyalty"] == "evil"):
+                x["damageBoost"] += 1
+
     print(colored("-----------------------------\n", "red"))
 
 
@@ -595,7 +614,7 @@ def chooseAction(character):
                 #20% chance of the Goblin Shaman attacking 
                 if (d4 == 1):
 
-                    choice == "1"
+                    choice = "1"
 
                 #80% chance of the Goblin Shaman casting a spell
                 else:
@@ -608,12 +627,12 @@ def chooseAction(character):
                     #If Goblin Shaman has enough mana he will cast a random spell
                     else:
 
-                        choice == "2"
+                        choice = "2"
 
             #If it's an enemy other than the Goblin Shaman he always attacks
             else:
 
-                choice == "1"
+                choice = "1"
                 
 
         #If character is attacking he goes into Attack Phase
@@ -756,6 +775,7 @@ while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["heal
 
     #Iniate each character's action phase
     actionPhase(characters)
+
 
 #Display YOU WIN or YOU LOSE depending on what party has a combined total of 0 health
 whoWon()
