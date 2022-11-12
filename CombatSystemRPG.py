@@ -10,7 +10,7 @@ def deleteInput():
     print ("\033[A                             \033[A")
 
 
-#Function to create a character
+#Function to create a character as a dictionary
 def createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned, damageBoost, alive):
 
     character = {
@@ -34,49 +34,70 @@ def createCharacter(name, health, mana, armor, damage, initiative, loyalty, pois
 #Function to roll iniative of each character
 def rollInitiative(character):
 
+    #Rolls a 20 sided dice
     d20 = random.randrange(1, 20)
+
+    #If the character is alive it prints the character's iniciate, else it skips that character
     if (character["alive"] == 1):
         print("\n" + character["name"] + " rolled a " + str(d20) + " his iniative is: " + colored(str(d20 + character["initiative"]), "yellow"))
         time.sleep(1.5)
+    
+    #Returns the character's iniciative
     return (d20 + character["initiative"])
 
 
-#Function that creates a tuple with the iniative roll of each character
+#Function that creates a list with the iniative roll of each character
 def turnOrder(characters):
 
+    #Initialize the list to append each initiave roll
     order = []
 
+    #Go through every character in the character list and append his iniative
     for character in characters:
 
         order.append(rollInitiative(character))
     
+    #Return a list with all the initiave rolls
     return(order)
 
 
 #Function to sort the character list by iniative order
 def sortOrder(order, characters):
 
-    auxTurn = 0
-    auxCharacter = ""
-
+    #Goes through the index from 0 to the length of the order list so it sorts "length amount of times"
     for i in range(len(order)):
-
+        
+        #Goes through the index from 0 to length - 1 of the order list
         for x in range(len(order) - 1):
-
+            
+            #If the number in the index is smaller then the next number (index + 1), they get swapped out
             if (order[x] < order[x + 1]):
 
                 #Swap order if iniative in next index is higher
+                #Saves old value on an auxiliar variable
                 auxTurn = order[x]
+
+                #The index becomes the next index's number
                 order[x] = order[x + 1]
+
+                #The next index becomes the saved number
                 order[x + 1] = auxTurn  
 
                 #If iniative in next index is smaller also swap character order in the characters array
+                #Saves old character on an auxiliar variable
                 auxCharacter = characters[x]
+
+                #The index becomes the next index's number
                 characters[x] = characters[x + 1]
+
+                #The next index becomes the saved number
                 characters[x + 1] = auxCharacter
             
+            #If the characters have the same initiative roll, there's a check to see whose 
+            #iniative his higher and put that character first
             elif (order[x] == order[x + 1]):
 
+                #Check whose iniative is higher
                 if (characters[x]["initiative"] < characters[x + 1]["initiative"]):
                     auxTurn = order[x]
                     order[x] = order[x + 1]
@@ -86,13 +107,17 @@ def sortOrder(order, characters):
                     characters[x] = characters[x + 1]
                     characters[x + 1] = auxCharacter
 
-                    
+    #Return the sorted list and the sorted character list
     return(order, characters)
     
-
+#Function to print every choice depending on if its allies or enemies
 def printChoices(loyalty):
 
+    #Initial counter to print in order
     choiceIndex = 0
+
+    #Display the options for every character in an unsorted list so the options 
+    #are consistent with the target choice function
     print("Who do you want to target? ")
     for x in charactersUnsorted:
         if (x["loyalty"] == loyalty):
@@ -111,84 +136,108 @@ def printChoices(loyalty):
     print("\n 0 - Go Back")
 
 
+#Function to choose who to target with spells
 def targetChoice(friendship):
 
+    #If its an ally attacking he gets enemy choices
     if (friendship == 0):
+
+        #Loop so the player can only choose one of the options displayed or else it keeps asking again
         while(True):
 
+            #Prints all the possible choices for enemies
             printChoices("evil")
 
+            #Receives the player choice
             attackDecision = input("\n").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
             
+            #If he chooses 1  and the goblin is alive he gets the goblin as the target
             if ((attackDecision == "1" and goblin["alive"] == 1) or (attackDecision == "goblin" and goblin["alive"] == 1)):
 
                 return (goblin)
             
+            #If he chooses 2 and the ogre is alive he gets the ogre as the target
             elif ((attackDecision == "2" and ogre["alive"] == 1) or (attackDecision == "ogre" and ogre["alive"] == 1)):
 
                 return (ogre)
             
+            #If he chooses 3 and the goblin shaman is alive he gets the goblin shaman as the target
             elif ((attackDecision == "3" and goblinShaman["alive"] == 1) or (attackDecision == "goblinshaman" and goblinShaman["alive"] == 1)):
 
                 return (goblinShaman)
             
+            #If he chooses 0 the function returns 0
             elif (attackDecision == "0"):
 
                 return ("0")
+
+            #If he doesnt choose a valid option he gets the options back to choose from
             else:
                 clear()
                 print("----------------------------------------")
                 print("You need to choose a valid " + colored("Enemy", "red", attrs=["bold"]) + " to attack\n")
                 print("----------------------------------------")
-                continue
 
+
+    #If its an ally trying to target an ally he gets ally choices
     elif(friendship == 1):
 
+        #Loop so the player can only choose one of the options displayed or else it keeps asking again
         while (True):
 
+            #Prints all the possible choices for allies
             printChoices("good")
 
+            #Gets the player's decision
             attackDecision = input("\n" ).translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
 
+            #If he chooses 1 and the rogue is alive he gets the rogue as the target
             if ((attackDecision == "1" and rogue["alive"] == 1) or (attackDecision == "rogue" and rogue["alive"] == 1)):
 
                     return (rogue)
 
+            #If he chooses 2 and the priest is alive he gets the priest as the target
             elif ((attackDecision == "2" and priest["alive"] == 1) or (attackDecision == "priest" and priest["alive"] == 1)):
 
                     return (priest)
 
+            #If he chooses 3 and the warrior is alive he gets the warrior as the target
             elif ((attackDecision == "3" and warrior["alive"] == 1) or (attackDecision == "warrior" and warrior["alive"] == 1)):
 
                     return (warrior)
 
+            #If he chooses 0 the function returns 0
             elif (attackDecision == "0"):
 
                 return ("0")
 
+            #If he doesnt choose a valid option he gets the options back to choose from
             else:
                 clear()
                 print("-----------------------------")
                 print("You need to choose a valid " + colored("Ally", "white", attrs=["bold"]) + "!")
                 print("-----------------------------\n")
             
-
+    #Returns the target for the action
     return (attackDecision)
 
 
-
+#Use the goblin shamans's spell damage buff
 def damageBuff():
     	
-
+    #Roll a 7 sided dice
     d7 = random.randrange(1,7)
 
     print(colored("\n-----------------------------", "red"))
 
+    #If the goblin shaman rolls a 1 (14% chance) he fails to cast the spell
     if (d7 == 1):
 
         print(goblinShaman["name"] + " tries to buff the enemies but fails!")
+
+    #If he rolls anything other than the 1 (86% chance) he casts damage buff
     else:
         
         print(goblinShaman["name"] + " buffs the " + colored("enemies", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )\n")
@@ -202,57 +251,73 @@ def damageBuff():
 
 
 
-#What the arrow rain spell does
+#Use the warrior's spell arrow rain
 def arrowRain():
 
+    #Roll a 10 sided dice
     d10 = random.randrange(1,10)
+
+    #Arrow Rains's mana cost
     spellMpCost = 8
 
+    #If the rogue doesnt have enough mana to use mend he goes back to choosing spells
     if (rogue["mana"] < spellMpCost):
 
         print("You dont have enough mana to cast that spell!")
         return("0")
 
+    #Else he casts arrow rain on every enemy
     else:
 
-        print(colored("\n-----------------------------", "yellow"))
-        print(rogue["name"] + " attacks every " + colored("enemy", "red") + "!\n")
-
+        #Reduces rogue's mana by the spell cost
         rogue["mana"] = rogue["mana"] - spellMpCost
+
+        #Display the damage dealt by the rogue to the targets
+        print(colored("\n-----------------------------\n", "yellow"))
+        print(rogue["name"] + " attacks every " + colored("enemy", "red") + "!\n")
 
         for target in characters:
 
-            if(target["loyalty"] == "evil"):
+            if(target["loyalty"] == "evil" and target["alive"] == 1):
                 if (((rogue["damage"] / 2) + d10) - target["armor"] > 0):
                     target["health"] = target["health"] - (int(((rogue["damage"] / 2) + d10)) - target["armor"])
                     print( target["name"] + " took " + colored(str((int(rogue["damage"] / 2)) + d10 - target["armor"]), "red", attrs = ["bold"]) + " damage!")
-                    print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
+                    print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!\n")
                 else:
                     print (target["name"] + " took no damage!")
+
         print(colored("-----------------------------\n", "yellow"))
 
 
-#Use the warrior's spell exorcism
+#Use the warrior's spell rushdown
 def rushDown():
     
+    #Roll a 4 sided dice
     d4=random.randrange(1,4)
+
+    #Rushdown's mana cost
     spellMpCost = 5
 
+    #If the warrior doesnt have enough mana to use mend he goes back to choosing spells
     if (warrior["mana"] < spellMpCost):
 
         print("You dont have enough mana to cast that spell!")
         return("0")
 
+    #Else he casts rushdown
     else:
-
-
-
+        
+        #Choose who to target with rushdown
         target = targetChoice(0)
+
+        #If he chooses 0 he goes back to choosing the spells
         if (target == "0"):
             return ("0")
 
+        #Reduces warrior's mana by the spell cost
         warrior["mana"] = warrior["mana"] - spellMpCost
         
+        #Display the damage dealt by the warrior to the target
         print(colored("\n-----------------------------", "yellow"))
         target["health"] = target["health"] - (warrior["damage"] + d4)
         print( target["name"] + " took " + colored(str((warrior["damage"] + d4)), "red", attrs = ["bold"]) + " damage!")
@@ -601,7 +666,8 @@ def attackPhase(character):
 
                 target = rogue
                 break
-
+        
+        #Display who is attacking who
         print(colored("\n-----------------------------", "red"))
         print("" + character["name"] + " attacks " + target["name"])
 
