@@ -661,6 +661,10 @@ def chooseAction(character):
 
             if (spellPhase(character) != "0"):
                 break
+
+        elif (choice == "3"):
+
+            rest(character)
     
 
 
