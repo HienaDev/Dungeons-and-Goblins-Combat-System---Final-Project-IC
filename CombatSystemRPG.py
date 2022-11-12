@@ -232,6 +232,15 @@ def arrowRain():
         print(colored("-----------------------------\n", "yellow"))
 
 
+def poison(character):
+
+    d4 = random.randrange(1,4)
+
+    character["poisoned"] = character["poisoned"] + d4
+
+    print(goblinShaman["name"] + " applied the spell poison to " + character["name"] + " !")
+    print (character["name"] + " is poisoned for " + str(d4) + " more rounds!")
+
 #What rushdown spell does
 def rushdown():
     
@@ -336,7 +345,7 @@ def spellChooseWarrior():
 
         clear()
         
-        print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + "mana: ")
+        print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + " mana: ")
         print("1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n")
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
@@ -590,7 +599,7 @@ def rest(character):
     else:
 
         character["mana"] = character["maxMana"]
-        print(character["name"] + " healed " + (character["maxMana"]) - (character["mana"]))
+        print(character["name"] + " restored " + str((character["maxMana"]) - (character["mana"])))
 
 
 
@@ -665,6 +674,7 @@ def chooseAction(character):
         elif (choice == "3"):
 
             rest(character)
+            break
     
 
 
