@@ -232,14 +232,34 @@ def arrowRain():
         print(colored("-----------------------------\n", "yellow"))
 
 
-def poison(character):
+def poison():
 
+     
+    while(True):
+        
+        target = random.randrange(1,3)
+    
+        if (target == 1 and priest["alive"] == 1):
+
+                target = priest 
+                break 
+
+        elif (target == 2 and warrior["alive"] == 1):
+
+                target = warrior
+                break  
+
+        elif (target == 3 and rogue["alive"] == 1):
+
+                target = rogue
+                break
+
+    
     d4 = random.randrange(1,4)
-
-    character["poisoned"] = character["poisoned"] + d4
-
-    print(goblinShaman["name"] + " applied the spell poison to " + character["name"] + " !")
-    print (character["name"] + " is poisoned for " + str(d4) + " more rounds!")
+    target["poisoned"] = (target["poisoned"] + d4)
+    
+    print(goblinShaman["name"] + " applied the spell poison to " + target["name"] + " !")
+    print (target["name"] + " is poisoned for " + str(d4) + " more rounds!")
 
 #Use the warrior's spell exorcism
 def rushDown():
@@ -636,7 +656,8 @@ def attackPhase(character):
 
 
 
-#The character rests and recovers 2/3 of its max mana
+#The~
+#  character rests and recovers 2/3 of its max mana
 def rest(character):
 
     manaRecover = int(character["maxMana"] * (2/3))
