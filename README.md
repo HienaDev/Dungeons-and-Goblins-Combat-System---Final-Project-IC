@@ -256,4 +256,7 @@ The project was carefully planned and separated into parts so it would be easier
   - https://pypi.org/project/termcolor/
 
 - You win/You lose text:
-  -  https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+  - https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+ 
+- Python .gitignore:
+  - https://github.com/github/gitignore/blob/main/Python.gitignore
