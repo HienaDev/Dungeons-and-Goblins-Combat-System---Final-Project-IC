@@ -916,6 +916,8 @@ def chooseAction(character):
                     if (goblinShaman["mana"] < 6):
 
                         rest(goblinShaman)
+                        choice = "0"
+                        choiceNotChosen = False
 
                     #If Goblin Shaman has enough mana he will cast a random spell
                     else:
