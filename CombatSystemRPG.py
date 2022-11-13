@@ -901,8 +901,9 @@ def chooseAction(character):
             choiceNotChosen = False
         
         else:
-
+            
             clear()
+            whoGoesFirst()
 
     
 
