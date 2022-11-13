@@ -56,6 +56,9 @@ The project was carefully planned and separated into parts so it would be easier
 
 
 - Characters:  To create the characters and link them automatically to their respective stats, we decided to invest in the dictionary option in Python. So every time we needed to call a variable of a certain character, it would be easier.
+  - Warrior: This character is very bulky and deals average damage;
+  - Priest: This character is very fragile but has the ability to heal his allies and cast spells on the enemies;
+  - Rogue: This character has average health and is very quick, he has the ability to deal area of effect damage and has the chance to crit his targets.
 
 - Initiative Phase: After creating the characters and their stats, we created the order in which they were going to attack. For that, we roll a die between 1 and 20, the number that the die decides is added to the number of the character's initiative. After adding the two values, the one that is highest is the first to play, and so on until every character has played.
 
@@ -65,6 +68,13 @@ The project was carefully planned and separated into parts so it would be easier
   - Attack: The character inflicts damage on the opponent;
   - Use a Spell: The character chooses a spell to cast. Some characters have spells that deal damage in an area, others can use spells to heal;
   - Rest: The character rests for the round not being able to attack or use spells but recovers mana;
+ 
+- The enemies: After the order is shown, each enemy attacks with a randomly chosen target:
+  - Fat Goblin: This enemy is very bulky, but he doesn't have any spells and deals average damage, he also has 0 initiative;
+  - Goblin Shaman: This enemy is very quick with average health. He mainly uses spells, but he has a very low chance of using his staff to bonk you. He has 2 spells:
+     - Damage Buff: The next time each enemy attacks they deal double damage;
+     - Poison: The shaman can poison you for 2-5 turns.
+  - Red and Green Goblin: This enemy is very fragile, but he deals a LOT of damage, he also has a chance to crit you, so be careful!
 
 - Main Loop: While there are still enemies to fight and our characters are alive, the action phase keeps happening.
 
