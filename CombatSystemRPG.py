@@ -309,7 +309,7 @@ def damageBuff():
 def arrowRain():
 
     #Roll a 8 sided dice
-    d5 = random.randrange(1, 9)
+    d8 = random.randrange(1, 9)
 
     #Arrow Rains's mana cost
     spellMpCost = 8
@@ -324,9 +324,9 @@ def arrowRain():
     for target in characters:
 
         if(target["loyalty"] == "evil" and target["alive"] == 1):
-            if (((rogue["damage"] / 2) + d5) - target["armor"] > 0):
-                target["health"] = target["health"] - (int(((rogue["damage"] / 2) + d5)) - target["armor"])
-                print( target["name"] + " took " + colored(str((int(rogue["damage"] / 2)) + d5 - target["armor"]), "red", attrs = ["bold"]) + " damage!")
+            if (((rogue["damage"] / 2) + d8) - target["armor"] > 0):
+                target["health"] = target["health"] - (int(((rogue["damage"] / 2) + d8)) - target["armor"])
+                print( target["name"] + " took " + colored(str((int(rogue["damage"] / 2)) + d8 - target["armor"]), "red", attrs = ["bold"]) + " damage!")
                 print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!\n")
             else:
                 print (target["name"] + " took no damage!")
@@ -723,12 +723,12 @@ def attackPhase(character):
         
         #If the character has damage boost deals double damage
         if (character["damageBoost"] == 0):
-
-            damage = (character["damage"] - target["armor"])
-
+            
+            damage = int(((character["damage"] * (d2/2) - target["armor"])))
         else:
 
-            damage = ((character["damage"] * 2) - target["armor"])
+            character["damageBoost"] = 0
+            damage = int((character["damage"] * 2 * (d2 /2) - target["armor"]))
 
         #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
@@ -945,8 +945,6 @@ def actionPhase(characters):
         #Check if the character is alive, and if he is he takes his turn
         if (character["alive"] == 1):
 
-            chooseAction(character)
-
             #Check if any character died inbetween character turns, to make sure a dead character cannot act, and changes his alive value to 0
             for x in characters:
 
@@ -959,6 +957,8 @@ def actionPhase(characters):
                     x["health"] = 0
                     x["name"] = colored(x["name"], attrs= ["reverse"])
 
+            chooseAction(character)
+            
             #Give time for the player to see what happened in that turn
             time.sleep(6)
 
