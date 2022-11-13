@@ -27,6 +27,7 @@
 - Added timer inbetween actions;
 - Added most of the commentary;
 - Added characters stats to output;
+- Added checkIfDead function.
 
 
 
@@ -83,7 +84,7 @@ The project was carefully planned and separated into parts so it would be easier
 
 - checkIfDead(character):
     - This function takes 1 argument, dicitionary "character";
-    - Checks if a character's "health" stat is under 0, and if it is it updates the character's "health" and "alive" stat to 0.
+    - Checks if a character's "health" stat is under 0, and if it is it updates the character's "health" and "alive" stat to 0 and changes the character's "name" stat to highlighted.
     
 - createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned, damageBoost, alive):
     -  This function takes 10 arguments, string "name", integer "health", integer "mana", integer "armor", integer "damage", integer "initiative", string "loyalty", integer "poisoned", integer "damageBoost" and integer "alive";
