@@ -100,6 +100,9 @@ def turnOrder(characters):
     #Initialize the list to append each initiave roll
     order = []
 
+    print("Every character rolls for iniative...\n")
+    time.sleep(2)
+
     #Go through every character in the character list and append his iniative
     for character in characters:
 
@@ -187,7 +190,7 @@ def targetChoice(friendship):
         attackDecision = ""
 
         #Loop so the player can only choose one of the options displayed or else it keeps asking again
-        while(not attackDecision in (greenGoblin, ogre, goblinShaman, redGoblin, "0")):
+        while(not attackDecision in (greenGoblin, fatGoblin, goblinShaman, redGoblin, "0")):
 
             #Prints all the possible choices for enemies
             printChoices("evil")
@@ -201,10 +204,10 @@ def targetChoice(friendship):
 
                 attackDecision = greenGoblin
             
-            #If he chooses 2 and the ogre is alive he gets the ogre as the target
-            elif ((attackDecision == "2" and ogre["alive"] == 1) or (attackDecision == "ogre" and ogre["alive"] == 1)):
+            #If he chooses 2 and the fat goblin is alive he gets the fat goblin as the target
+            elif ((attackDecision == "2" and fatGoblin["alive"] == 1) or (attackDecision == "fatgoblin" and fatGoblin["alive"] == 1)):
 
-                attackDecision = ogre
+                attackDecision = fatGoblin
             
             #If he chooses 3 and the goblin shaman is alive he gets the goblin shaman as the target
             elif ((attackDecision == "3" and goblinShaman["alive"] == 1) or (attackDecision == "goblinshaman" and goblinShaman["alive"] == 1)):
@@ -926,7 +929,7 @@ def actionPhase(characters):
     for character in characters:
 
         #In case one of the parties dies mid combat loop, this breaks the loop and exits to whoWon to display 
-        if (ogre["health"] + greenGoblin["health"] + goblinShaman["health"] + redGoblin["health"] <= 0):
+        if (fatGoblin["health"] + greenGoblin["health"] + goblinShaman["health"] + redGoblin["health"] <= 0):
 
             break
         elif (warrior["health"] + priest["health"] + rogue["health"] <= 0):
@@ -981,7 +984,7 @@ def whoWon():
         print("\n")
 
     #Prints YOU WIN if enemy party has 0 combined health                                                         
-    elif (ogre["health"] + greenGoblin["health"] + goblinShaman["health"] + redGoblin["health"]<= 0 ):
+    elif (fatGoblin["health"] + greenGoblin["health"] + goblinShaman["health"] + redGoblin["health"]<= 0 ):
 
         print(colored ("__     __ ____   _    _  __          __ _____  _   _ ", "yellow"))
         print(colored ("\ \   / // __ \ | |  | | \ \        / /|_   _|| \ | |", "yellow"))
@@ -1020,25 +1023,25 @@ warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2,
 goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 7, "evil", 0, 0, 1)   
 greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
 redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 12, 0, 0, 9, 7, "evil", 0, 0, 1)
-ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
+fatGoblin = createCharacter(colored("Fat Goblin", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
 
 #Creating an unsorted list for the fuction printChoices to always display the same options since the list characters will constantly be sorted
-charactersUnsorted = [rogue, priest, warrior, greenGoblin, ogre, goblinShaman, redGoblin]
+charactersUnsorted = [rogue, priest, warrior, greenGoblin, fatGoblin, goblinShaman, redGoblin]
 
 #Creating a list with every character that will constantly be sorted by initiative order
-characters = [rogue, priest, warrior, goblinShaman, greenGoblin, ogre, redGoblin]
+characters = [rogue, priest, warrior, goblinShaman, greenGoblin, fatGoblin, redGoblin]
 
-
-print("             Welcome to Dungeons & Goblins!")
-time.sleep(2)
-print("\n       Here you will have to face a party of dangerous goblins...")
-time.sleep(2)
-print("\n Good luck! and watch out for the crits...")
-time.sleep(3.5)
+clear()
+print(colored("\n\n             Welcome to Dungeons & Goblins!\n", attrs=["bold"]))
+time.sleep(1.5)
+print("\n Here you will have to face a party of " + colored("dangerous", "red", attrs=["bold"]) +  " goblins...")
+time.sleep(3)
+print("\n Good luck!...and watch out for the " + colored("crits", "yellow") + "...\n\n")
+time.sleep(4)
 
 
 #Main combat loop 
-while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + greenGoblin["health"] + goblinShaman["health"]  + redGoblin["health"]> 0 ):
+while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and fatGoblin["health"] + greenGoblin["health"] + goblinShaman["health"]  + redGoblin["health"]> 0 ):
 
     clear()
     #Create a list with each character rolling its iniative
