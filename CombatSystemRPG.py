@@ -628,15 +628,15 @@ def spellChoosePriest():
 #Spell choosing for the goblin shaman
 def spellChooseGS():
     
-    #If he gets a 1 or 2 (66% chance) he chooses poison, if he gets a 3  (33% chance) he choose the damage buff spell
-    d3 = random.randrange(1, 4)
+    #If he gets a 1 (50% chance) he chooses poison, if he gets a 2  (50% chance) he choose the damage buff spell
+    d3 = random.randrange(1, 3)
     #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
         if (d3 == 1):
 
             poison()
 
-        elif (d3 == 3 or d3 == 2):
+        elif (d3 == 2):
             if (goblinShaman["mana"] > 7):
 
                 damageBuff()
@@ -736,9 +736,6 @@ def attackPhase(character):
         
     #If the characters is an enemy he attacks here
     elif (character["loyalty"] == "evil"):
-
-        print("\n" + character["name"] + " is deciding what to do...")
-        time.sleep(5)
 
         target = 0
 
@@ -852,6 +849,10 @@ def chooseAction(character):
 
         #If its an enemy character (loyalty = evil) his actions are randomly chosen
         else:
+
+            #Stops the program to look like the enemy is deciding what to do
+            print("\n" + character["name"] + " is deciding what to do...")
+            time.sleep(5)
 
             #If the enemy is a goblinShaman he has a chance of using spells, since he's the only spell caster on the enemy side
             if (character["name"] == goblinShaman["name"]):
@@ -1007,7 +1008,7 @@ poisonDamage = 5
 rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 22, 10, 0, 6, 10, "good", 0, 0, 1)   
 priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 0, 0, 1)  
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 0, 0, 1)  
-goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 12, "evil", 0, 0, 1)   
+goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 7, "evil", 0, 0, 1)   
 greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 1, 8, 7, "evil", 0, 0, 1)
 redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 12, 0, 1, 9, 7, "evil", 0, 0, 1)
 ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
