@@ -59,9 +59,9 @@ The project was carefully planned and separated into parts so it would be easier
 - Action Phase: After the order is shown, the characters can choose from three actions that are available to them. The characters the player controls can choose from:
 
 
- - Attack: The character inflicts damage on the opponent;
- - Use a Spell: The character chooses a spell to cast. Some characters have spells that deal damage in an area, others can use spells to heal;
- - Rest: The character rests for the round not being able to attack or use spells but recovers mana;
+  - Attack: The character inflicts damage on the opponent;
+  - Use a Spell: The character chooses a spell to cast. Some characters have spells that deal damage in an area, others can use spells to heal;
+  - Rest: The character rests for the round not being able to attack or use spells but recovers mana;
 
 - Main Loop: While there are still enemies to fight and our characters are alive, the action phase keeps happening.
 
