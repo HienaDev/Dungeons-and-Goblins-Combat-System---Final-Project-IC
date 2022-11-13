@@ -749,7 +749,7 @@ def attackPhase(character):
 
         #If the enemy is a goblin he has 50% chance to deal double damage
         if (character["name"] == goblin["name"]):
-
+#tempo goblin shaman
             #Damage * d2
             d2 = random.randrange(2, 5)
             
