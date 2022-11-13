@@ -859,7 +859,7 @@ def chooseAction(character):
         if (character["loyalty"] == "good"):
 
             print("\n\nYou are: " + character["name"])
-            print("Would you like to: \n 1 - Attack \n 2 - Use a spell \n 3 - Rest ( Recover "+ colored("Mana", "blue") +" )\n")
+            print("Would you like to: \n\n 1 - Attack \n 2 - Use a spell \n 3 - Rest ( Recover "+ colored("Mana", "blue") +" )\n")
             choice = input("> ").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
 
