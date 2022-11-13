@@ -81,7 +81,10 @@ The project was carefully planned and separated into parts so it would be easier
 ### Complicated algorithms implemented:
 
 
-
+- checkIfDead(character):
+    - This function takes 1 argument, dicitionary "character";
+    - Checks if a character's "health" stat is under 0, and if it is it updates the character's "health" and "alive" stat to 0.
+    
 - createCharacter(name, health, mana, armor, damage, initiative, loyalty, poisoned, damageBoost, alive):
     -  This function takes 10 arguments, string "name", integer "health", integer "mana", integer "armor", integer "damage", integer "initiative", string "loyalty", integer "poisoned", integer "damageBoost" and integer "alive";
     - It then creates a dictionary "character" with those exact stats.
