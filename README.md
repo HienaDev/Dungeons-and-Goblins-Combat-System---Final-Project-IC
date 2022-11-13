@@ -112,7 +112,6 @@ The project was carefully planned and separated into parts so it would be easier
     - This function reduces the goblin shaman's mana by 8;
     - Then it gets a random number from 1 to 7. If it's 7, this function prints that the goblin shaman failed to use a spell;
     - If its anything other than 1 the goblin shaman "uses" the spell and adds 1 to the "damageBoost" stat of every character with loyalty "evil".
- 
     - arrowRain():
     - This function takes no arguments;
     - This function gets a random number from 1 to 8;
