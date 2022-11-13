@@ -39,29 +39,21 @@
 
 ### Organização e explicação do código:
 
-- No começo do trabalho pensamos que iria ser mais trabalhoso se não usasse mos um dicionário para definir as variáveis das personagens, então depois de alguma pesquisa e aprendizagem decidimos tratar das personagens com dicionários.
+- In the start we thought it would be hard to do the work if we woul not use the Diccionary option in Python to define the many variables of the characters . So we reaserched how it worked and how it would improve the work. 
 
-- Trabalhamos com o programa numa base maior com definições. No começo de cada ronda, e para começar a luta no jogo decidimos implementar um dado com um valor possível de 0 a 21 e adicionar ao já implementado valor de iniciativa de cada personagem.
+- In the start, we implemented the turn order. We assigned a value to each distinct character and added a random number between 1 and 20 (our dice). The character that had the highest number would go inthe first turn and etc.
 
-- O personagem que obteve o maior valor será o que conseguirá passar á ação primeiro.
+- The enemy characters or troops are a "Goblin Shaman", a "Goblin" and an "Ogre". In contrast the allied troops are the "Priest", the "Rougue" and the "Warrior". Each chjaracter that the player can control posses special and unique spells, while in the enemy squad only the "goblin Shaman" can cast a spell. Non the less The enemy squad is full of surprises. 
 
-- Estes personagens podem ser um "Ogre", um "Goblin Shaman" e um "Goblin" que são os inimigos que o jogador e os seus personagens têm de abater.
-As personagens do jogador são um "Priest", um "Warrior" e um "Rouge".
-
-- Cada Personagem do jogador possui a opção de usar os seus spells especificos, atacar e descansar. Caso o jogador fizer uma personagem denscanbdar esta na sua ronda irás recuperare algum mana de volta.
-
-- Para melhorar o projecto em termos estéticos importamos "termcolored" para dar uma maior cor e tornar mais fácil entender o que se está a passar e fazer a distinção de inimigo e aliado.
+ - Every Troop can do an basic attack that will inflict direct damage onthe target and also every character canj use the action "Rest" wich will make the character loose the round but restore some of the missing mana.
 
 ![](foto.png)
 
 
 
-
 ##### Referencias:
 
-Durante tempos livres e de pesquisa, ideias foram trocadas com vários colegas, tal como ajuda fornecida pleos mesmos.
-
-Alguns dos colegas:
+In our reaserch and free time, we traded ideas and fixes with some of our class collegues. Some of them were: 
 
 - Ricardo Almeida - a21807601
 - Paulo Silva
