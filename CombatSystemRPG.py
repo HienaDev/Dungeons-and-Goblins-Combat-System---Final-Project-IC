@@ -899,6 +899,10 @@ def chooseAction(character):
 
             rest(character)
             choiceNotChosen = False
+        
+        else:
+
+            clear()
 
     
 
