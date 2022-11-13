@@ -30,7 +30,7 @@ def createCharacter(name, health, mana, armor, damage, initiative, loyalty, pois
 
     return (character)
 
-
+#Function to print every character with its stats 
 def printCharacterStats(character, choiceIndex):
 
     #Initalized extra characters in case the character dies to keep everything aligned
@@ -131,6 +131,7 @@ def sortOrder(order, characters):
                 #The next index becomes the saved number
                 order[x + 1] = auxTurn  
 
+
                 #If iniative in next index is smaller also swap character order in the characters array
                 #Saves old character on an auxiliar variable
                 auxCharacter = characters[x]
@@ -174,7 +175,7 @@ def printChoices(loyalty):
 
             printCharacterStats(x, choiceIndex)
 
-    print("\n 0 - Go Back")
+    print("\n0 - Go Back")
 
 
 #Function to choose who to target with spells
@@ -302,8 +303,6 @@ def damageBuff():
 
 
 
-
-
 #Use the rogue's spell arrow rain
 def arrowRain():
 
@@ -335,6 +334,7 @@ def arrowRain():
 #Use the goblin shaman's spell poison
 def poison():
 
+    #Initalize the variable target so it can go inside the while loop
     target = 0
 
     #Reduce goblin shaman name by the spell's cost
@@ -540,6 +540,7 @@ def spellChooseWarrior():
 #Rogue choosing a spell
 def spellChooseRogue():
 
+    #Initalizing choice so it can go inside the while loop
     choice = ""
 
     #Loop so the player can only choose one of the 2 options displayed
@@ -630,6 +631,7 @@ def spellChooseGS():
     
     #If he gets a 1 (50% chance) he chooses poison, if he gets a 2  (50% chance) he choose the damage buff spell
     d3 = random.randrange(1, 3)
+
     #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
         if (d3 == 1):
@@ -643,12 +645,12 @@ def spellChooseGS():
 
             else:
 
-                rest()
+                rest(goblinShaman)
 
 
     else:
 
-        rest()
+        rest(goblinShaman)
     
 
 #Function that shows character's attack order on the terminal
@@ -672,6 +674,7 @@ def whoGoesFirst(characters):
 def spellPhase(character):
 
     #Each character has a differente spell phase
+    #If he chooses 0 clears the ouput and goes back to choosing what to do
     if (character["name"] == priest["name"]):
 
         if (spellChoosePriest() == "0"):
