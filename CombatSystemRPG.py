@@ -724,18 +724,34 @@ def attackPhase(character):
             return ("0")
 
 
-        #Dealing the damage and displaying it on screen
-        print(colored("\n-----------------------------", "white"))
-        print(character["name"] + " attacks " + target["name"])
-        
-        #If the character has damage boost deals double damage
+        #If its any other character other than rogue damage * 1
+        d2 = 2
+
+        #If the character is a rogue he has 25% chance to deal 2x damage, 25% chance do deal 1.5x damage,
+        #  25% chance to deal normal damage and 25% chance of dealing 0.5x damage
+        if (character["name"] == rogue["name"]):
+
+            #Damage * d2
+            d2 = random.randrange(1, 5)
+            if (d2 == 1):
+                print(character["name"] + " fails his attack and deals half " + colored("damage", "red") + "!")
+            elif (d2 == 3):
+                print(character["name"] + " hits a vital! 1.5x " + colored("Damage", "red") + "!")
+            elif (d2 == 4):
+                print(character["name"] + " gets a "+ colored("CRITICAL HIT 2x ", "yellow", attrs=["bold"]) + colored("Damage", "red") + "!")
+            
+        #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
             
-            damage = int(((character["damage"] - target["armor"])))
+            damage = int(((character["damage"] * (d2/2) - target["armor"])))
         else:
 
             character["damageBoost"] = 0
-            damage = int((character["damage"] * 2 - target["armor"]))
+            damage = int((character["damage"] * 2 * (d2 /2) - target["armor"]))
+
+        #Dealing the damage and displaying it on screen
+        print(colored("\n-----------------------------", "white"))
+        print(character["name"] + " attacks " + target["name"])  
 
         #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
