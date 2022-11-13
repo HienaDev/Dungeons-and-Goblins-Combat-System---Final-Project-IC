@@ -675,18 +675,21 @@ def spellPhase(character):
     if (character["name"] == priest["name"]):
 
         if (spellChoosePriest() == "0"):
+            clear()
             return("0")
         return ("1")
 
     elif (character["name"] == warrior["name"]):
 
         if (spellChooseWarrior() == "0"):
+            clear()
             return("0")
         return("1")
 
     elif (character["name"] == rogue["name"]):
 
         if (spellChooseRogue() == "0"):
+            clear()
             return("0")
         return("1")
 
