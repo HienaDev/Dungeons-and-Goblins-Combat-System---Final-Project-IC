@@ -633,32 +633,40 @@ def whoGoesFirst(characters):
     
     print("Turn order:\n")
 
-    i = 0
+    choiceIndex = 0
     
     for x in characters:
 
         #Only displays alive characters on terminal
         if (x["alive"] == 1):
             
-            i += 1
+            choiceIndex += 1
 
-            print(str(i) + " - " + x["name"], end = "")
+            extra = 0
 
-            for _ in range(0, (28 - len(x["name"]))):
+            print(str(choiceIndex) + " - " + x["name"], end = "")
+
+            if (x["alive"]  == 0):
+                extra = 8
+
+            for _ in range(0, ((28 + extra) - len(x["name"]))):
 
                 print(" ", end="")
-
+            
             print("[ " + colored("HP: " , "green"), end="")
             if (x["health"] < 10):
                 print("0", end="")
             print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
+
             print(colored(" Mana: ", "blue"), end="")
             if (x["mana"] < 10):
                 print("0", end="")
             print(str(x["mana"]) + "/", end= "")
+
             if (x["maxMana"] < 10):
                 print("0", end="")
             print(str(x["maxMana"]), end = " |")
+
             print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
             print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
             print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
