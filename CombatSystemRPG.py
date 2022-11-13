@@ -220,6 +220,7 @@ def targetChoice(friendship):
             elif (attackDecision == "0"):
 
                 attackDecision = "0"
+                clear()
 
             #If he doesnt choose a valid option he gets the options back to choose from
             else:
@@ -263,6 +264,7 @@ def targetChoice(friendship):
             elif (attackDecision == "0"):
 
                 attackDecision = "0"
+                clear()
 
             #If he doesnt choose a valid option he gets the options back to choose from
             else:
