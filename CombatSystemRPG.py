@@ -832,14 +832,14 @@ def rest(character):
 #Function to decide what action each character does
 def chooseAction(character):
 
-    #Display the turn order everytime someone has to choose an action
-    whoGoesFirst(characters)
-
     choiceNotChosen = True
 
     #If character is alive he acts
     while(choiceNotChosen and character["alive"] == 1):
-            
+
+        #Display the turn order everytime someone has to choose an action
+        whoGoesFirst(characters)
+
         #If its an ally character (loyalty = good) he chooses what to do 
         if (character["loyalty"] == "good"):
 
