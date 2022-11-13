@@ -124,23 +124,31 @@ def printChoices(loyalty):
             
             choiceIndex += 1
 
+            extra = 0
+
             print(str(choiceIndex) + " - " + x["name"], end = "")
 
-            for _ in range(0, (28 - len(x["name"]))):
+            if (x["alive"]  == 0):
+                extra = 8
+
+            for _ in range(0, ((28 + extra) - len(x["name"]))):
 
                 print(" ", end="")
-
+            
             print("[ " + colored("HP: " , "green"), end="")
             if (x["health"] < 10):
                 print("0", end="")
             print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
+
             print(colored(" Mana: ", "blue"), end="")
             if (x["mana"] < 10):
                 print("0", end="")
             print(str(x["mana"]) + "/", end= "")
+
             if (x["maxMana"] < 10):
                 print("0", end="")
             print(str(x["maxMana"]), end = " |")
+
             print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
             print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
             print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
@@ -158,8 +166,10 @@ def targetChoice(friendship):
     #If its an ally attacking he gets enemy choices
     if (friendship == 0):
 
+        attackDecision = ""
+
         #Loop so the player can only choose one of the options displayed or else it keeps asking again
-        while(True):
+        while(not attackDecision in (goblin, ogre, goblinShaman, "0")):
 
             #Prints all the possible choices for enemies
             printChoices("evil")
@@ -171,36 +181,38 @@ def targetChoice(friendship):
             #If he chooses 1  and the goblin is alive he gets the goblin as the target
             if ((attackDecision == "1" and goblin["alive"] == 1) or (attackDecision == "goblin" and goblin["alive"] == 1)):
 
-                return (goblin)
+                attackDecision = goblin
             
             #If he chooses 2 and the ogre is alive he gets the ogre as the target
             elif ((attackDecision == "2" and ogre["alive"] == 1) or (attackDecision == "ogre" and ogre["alive"] == 1)):
 
-                return (ogre)
+                attackDecision = ogre
             
             #If he chooses 3 and the goblin shaman is alive he gets the goblin shaman as the target
             elif ((attackDecision == "3" and goblinShaman["alive"] == 1) or (attackDecision == "goblinshaman" and goblinShaman["alive"] == 1)):
 
-                return (goblinShaman)
+                attackDecision = goblinShaman
             
             #If he chooses 0 the function returns 0
             elif (attackDecision == "0"):
 
-                return ("0")
+                attackDecision = "0"
 
             #If he doesnt choose a valid option he gets the options back to choose from
             else:
                 clear()
-                print("----------------------------------------")
-                print("You need to choose a valid " + colored("Enemy", "red", attrs=["bold"]) + " to attack\n")
-                print("----------------------------------------")
+                print("\n----------------------------------------")
+                print("You need to choose a valid " + colored("Enemy", "red", attrs=["bold"]) + " to attack")
+                print("----------------------------------------\n")
 
 
     #If its an ally trying to target an ally he gets ally choices
     elif(friendship == 1):
 
+        attackDecision = ""
+
         #Loop so the player can only choose one of the options displayed or else it keeps asking again
-        while (True):
+        while (not attackDecision in (rogue, warrior, priest, "0")):
 
             #Prints all the possible choices for allies
             printChoices("good")
@@ -212,22 +224,22 @@ def targetChoice(friendship):
             #If he chooses 1 and the rogue is alive he gets the rogue as the target
             if ((attackDecision == "1" and rogue["alive"] == 1) or (attackDecision == "rogue" and rogue["alive"] == 1)):
 
-                    return (rogue)
+                attackDecision = rogue
 
             #If he chooses 2 and the priest is alive he gets the priest as the target
             elif ((attackDecision == "2" and priest["alive"] == 1) or (attackDecision == "priest" and priest["alive"] == 1)):
 
-                    return (priest)
+                attackDecision = priest
 
             #If he chooses 3 and the warrior is alive he gets the warrior as the target
             elif ((attackDecision == "3" and warrior["alive"] == 1) or (attackDecision == "warrior" and warrior["alive"] == 1)):
 
-                    return (warrior)
+                attackDecision = warrior
 
             #If he chooses 0 the function returns 0
             elif (attackDecision == "0"):
 
-                return ("0")
+                attackDecision = "0"
 
             #If he doesnt choose a valid option he gets the options back to choose from
             else:
@@ -251,12 +263,12 @@ def damageBuff():
     #If the goblin shaman rolls a 1 (14% chance) he fails to cast the spell
     if (d7 == 1):
 
-        print(goblinShaman["name"] + " tries to buff the enemies but fails!")
+        print(goblinShaman["name"] + " tries to buff the" + colored(" enemies", "red") + " but fails!")
 
     #If he rolls anything other than the 1 (86% chance) he casts damage buff
     else:
         
-        print(goblinShaman["name"] + " buffs the " + colored("enemies", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )\n")
+        print(goblinShaman["name"] + " buffs the" + colored(" enemies ", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )\n")
         for x in characters:
             if (x["loyalty"] == "evil"):
                 x["damageBoost"] += 1
@@ -298,28 +310,27 @@ def arrowRain():
 #Use the goblin shaman's spell poison
 def poison():
 
+    target = 0
+
     #Cycle happens until goblin shaman picks an ally that's alive
-    while(True):
+    while(not target in (priest, warrior, rogue)):
         
         target = random.randrange(1, 4)
     
         if (target == 1 and priest["alive"] == 1):
 
             target = priest 
-            break 
 
         elif (target == 2 and warrior["alive"] == 1):
 
-            target = warrior
-            break  
+            target = warrior 
 
         elif (target == 3 and rogue["alive"] == 1):
 
             target = rogue
-            break
 
-    #Roll a 4 sided dice to choose how many turns the target is poisoned for
-    d4 = random.randrange(1, 5)
+    #Roll a 4 sided dice to choose how many turns the target is poisoned for + 1
+    d4 = random.randrange(2, 6)
 
     #Add the amount of turns rolled on the dice to the amount of turns the target is poisoned for
     target["poisoned"] += d4
@@ -340,7 +351,7 @@ def rushDown():
     #Rushdown's mana cost
     spellMpCost = 5
 
-    #If the warrior doesnt have enough mana to use mend he goes back to choosing spells
+    #If the warrior doesnt have enough mana to use rushdown he goes back to choosing spells
     if (warrior["mana"] < spellMpCost):
 
         print("You dont have enough mana to cast that spell!")
@@ -441,7 +452,7 @@ def mend():
         if (target["health"] + (d6 + priest["damage"]) < target["maxHealth"]):
 
             target["health"] = target["health"] + (d6 + priest["damage"])
-            print("Priest healed " + str((target["damage"] + d6)) + " life points to the " + target["name"] + "!")
+            print("Priest healed " + str((priest["damage"] + d6)) + " life points to the " + target["name"] + "!")
             print( target["name"] + " now has " + str(target["health"]) + colored(" HP", "green"))
 
 
@@ -463,12 +474,15 @@ def mend():
 #Warrior choosing a spell
 def spellChooseWarrior():
 
+    choice = ""
+    
     #Loop so the player can only choose one of the 2 options displayed
-    while(True):
+    while(choice != "done"):
 
         #Display possible options
         print("Choose a spell, you have " + colored(str(warrior["mana"]), "blue") + " mana: ")
-        print(" 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") +"\n 0 - Go Back\n\n")
+        print(" 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") 
+        +"\n\n0 - Go Back\n")
         
         #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
@@ -479,12 +493,13 @@ def spellChooseWarrior():
 
             if (rushDown() == "0"):
                 clear()
-                continue
-            break
+            else:
+                choice = "done"
         
         #Go back if he chooses 0
         elif (choice == "0"):
 
+            choice = "done"
             return ("0")
 
         #Print this if its an invalid choice
@@ -492,19 +507,20 @@ def spellChooseWarrior():
 
             clear()
             print("\nYou need to choose a spell\n")
-            continue
 
 
 #Rogue choosing a spell
 def spellChooseRogue():
 
+    choice = ""
+
     #Loop so the player can only choose one of the 2 options displayed
-    while(True):
+    while(choice != "done"):
 
         #Display possible options
         print("Choose a spell, you have " + colored(str(rogue["mana"]), "blue") + " mana: ")
         print(" 1 - Arrow Rain (AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 5), "red") + ") Cost: " + colored("8", "blue"))
-        print(" 0 - Go Back\n\n")
+        print("\n 0 - Go Back\n\n")
 
         #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
@@ -520,32 +536,34 @@ def spellChooseRogue():
             else:
 
                 arrowRain()
-                break
+                choice = "done"
         
         #Go back if he chooses 0
         elif (choice == "0"):
 
+            choice = "done"
             return ("0")
 
         #Print this if its an invalid choice
         else:
             clear()
             print("\nYou need to choose a spell\n")
-            pass
 
 
 
 #Priest choosing a spell
 def spellChoosePriest():
 
+    choice = ""
+
     #Loop so the player can only choose one of the 3 options displayed
-    while(True):
+    while(choice != "done"):
         
         #Display possible options
         print("Choose a spell, you have " + colored(str(priest["mana"]), "blue") + " mana: ")
         print(" 1 - Exorcism (" + colored("2", "red") + "-" + colored("8", "red") + ") Cost: " + colored("5", "blue"))
         print(" 2 - Mend (" + colored(priest["damage"] + 1, "green") + "-" + colored(priest["damage"] + 6, "green") + ") Cost: " + colored("3", "blue"))
-        print(" 0 - Go Back\n\n")
+        print("\n 0 - Go Back\n\n")
 
         #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
@@ -555,19 +573,22 @@ def spellChoosePriest():
         if (choice == "1" or choice == "exorcism"):
 
             if (exorcism() == "0"):
-                continue
-            break
+                clear()
+            else:
+                choice = "done"
 
         #Go to function mend if he chooses 2
         elif (choice == "2" or choice == "mend"):
 
             if (mend() == "0"):
-                continue
-            break
+                clear()
+            else:
+                choice = "done"
         
         #Go back if he chooses 0
         elif (choice == "0"):
 
+            choice = "done"
             return ("0")
 
         #Print this if its an invalid choice
@@ -583,11 +604,11 @@ def spellChooseGS():
     d3 = random.randrange(1, 4)
     #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
-        if (d3 == 1 or d3 == 2):
+        if (d3 == 1):
 
             poison()
 
-        elif (d3 == 3):
+        elif (d3 == 3 or d3 == 2):
             if (goblinShaman["mana"] > 7):
 
                 damageBuff()
@@ -720,25 +741,23 @@ def attackPhase(character):
         print("\n" + character["name"] + " is deciding what to do...")
         time.sleep(5)
 
+        target = 0
+
         #Choose a random character from the ally team to attack
-        while(True):
+        while(not target in [priest, warrior, rogue]):
             target = random.randrange(1, 4)
        
-
             if (target == 1 and priest["alive"] == 1):
 
                 target = priest
-                break
 
             elif (target == 2 and warrior["alive"] == 1):
 
                 target = warrior
-                break   
 
             elif (target == 3 and rogue["alive"] == 1):
 
                 target = rogue
-                break
         
         #Display who is attacking who
         print(colored("\n-----------------------------", "red"))
@@ -810,6 +829,9 @@ def rest(character):
 #Function to decide what action each character does and check if character is poisoned
 def chooseAction(character):
 
+
+    choiceNotChosen = True
+
     #If the character is poisoned and alive, he takes poison damage and reduces poison turns by 1
     if (character["poisoned"] > 0 and character["health"] > 0):
 
@@ -821,7 +843,7 @@ def chooseAction(character):
             character["alive"] = 0
 
     #If character is alive he acts
-    while(True and character["alive"] == 1):
+    while(choiceNotChosen and character["alive"] == 1):
             
         #If its an ally character (loyalty = good) he chooses what to do 
         if (character["loyalty"] == "good"):
@@ -836,14 +858,14 @@ def chooseAction(character):
             #If the enemy is a goblinShaman he has a chance of using spells, since he's the only spell caster on the enemy side
             if (character["name"] == goblinShaman["name"]):
                 
-                d4 = random.randrange(1, 6)
+                d4 = random.randrange(1, 8)
                 
-                #20% chance of the Goblin Shaman attacking 
+                #15% chance of the Goblin Shaman attacking 
                 if (d4 == 1):
 
                     choice = "1"
 
-                #80% chance of the Goblin Shaman casting a spell
+                #85% chance of the Goblin Shaman casting a spell
                 else:
 
                     #If Goblin Shaman doesnt have enough mana to cast a spell he rests to recover mana
@@ -866,21 +888,20 @@ def chooseAction(character):
         if (choice == "1"):
 
             if (attackPhase(character) != "0"):
-                break
+                choiceNotChosen = False
             
 
         #If character is casting a spell he goes into Spell Phase
         elif (choice == "2"):
 
             if (spellPhase(character) != "0"):
-                break
+                choiceNotChosen = False
 
         elif (choice == "3"):
 
             rest(character)
-            break
+            choiceNotChosen = False
 
-        clear()
     
 
 
@@ -977,7 +998,7 @@ poisonDamage = 5
 rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 22, 10, 0, 6, 10, "good", 0, 0, 1)   
 priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 0, 0, 1)  
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 0, 0, 1)  
-goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 20, 0, 2, 5, "evil", 0, 0, 1)   
+goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 12, "evil", 0, 0, 1)   
 goblin = createCharacter(colored("Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
 ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 20, 0, 2, 5, 0, "evil", 0, 0, 1)
 
@@ -992,7 +1013,6 @@ characters = [rogue, priest, warrior, goblinShaman, goblin, ogre]
 while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + goblin["health"] + goblinShaman["health"] > 0 ):
 
     clear()
-    
     #Create a list with each character rolling its iniative
     order = turnOrder(characters)
 
@@ -1003,7 +1023,7 @@ while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["heal
     time.sleep(2)
 
     clear()
-
+    
     #Iniate each character's action phase
     actionPhase(characters)
 
