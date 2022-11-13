@@ -526,6 +526,8 @@ def spellChooseWarrior():
 
             if (rushDown() == "0"):
                 clear()
+                if (warrior["mana"] == 0):
+                    print("You have no "+ colored("mana", "blue") + "!")
             else:
                 choice = "done"
         
