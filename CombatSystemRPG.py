@@ -514,7 +514,7 @@ def spellChooseWarrior():
 
         #Display possible options
         print("Choose a spell, you have " + colored(str(warrior["mana"]), "blue") + " mana: ")
-        print(" 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") 
+        print("\n 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") 
         +"\n\n 0 - Go Back\n")
         
         #Get the player's input
