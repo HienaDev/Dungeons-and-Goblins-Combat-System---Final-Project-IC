@@ -515,7 +515,7 @@ def spellChooseWarrior():
         #Display possible options
         print("Choose a spell, you have " + colored(str(warrior["mana"]), "blue") + " mana: ")
         print(" 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") 
-        +"\n 0 - Go Back\n")
+        +"\n\n 0 - Go Back\n")
         
         #Get the player's input
         choice = input("> ").translate({ord(c): None for c in string.whitespace}).lower()
@@ -554,7 +554,7 @@ def spellChooseRogue():
     while(choice != "done"):
 
         #Display possible options
-        print("Choose a spell, you have " + colored(str(rogue["mana"]), "blue") + " mana: ")
+        print("Choose a spell, you have " + colored(str(rogue["mana"]), "blue") + " mana: \n")
         print(" 1 - Arrow Rain (AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 8), "red") + ") Cost: " + colored("8", "blue"))
         print("\n 0 - Go Back\n\n")
 
@@ -568,7 +568,9 @@ def spellChooseRogue():
             #If the rogue doesnt have enough mana to use arrow rain he goes back to choosing spells
             if (rogue["mana"] < 8):
 
+                clear()
                 print("You dont have enough mana to cast that spell!")
+                
             else:
 
                 arrowRain()
