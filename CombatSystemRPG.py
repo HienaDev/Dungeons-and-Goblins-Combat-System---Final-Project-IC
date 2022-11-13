@@ -724,11 +724,11 @@ def attackPhase(character):
         #If the character has damage boost deals double damage
         if (character["damageBoost"] == 0):
             
-            damage = int(((character["damage"] * (d2/2) - target["armor"])))
+            damage = int(((character["damage"] - target["armor"])))
         else:
 
             character["damageBoost"] = 0
-            damage = int((character["damage"] * 2 * (d2 /2) - target["armor"]))
+            damage = int((character["damage"] * 2 - target["armor"]))
 
         #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
