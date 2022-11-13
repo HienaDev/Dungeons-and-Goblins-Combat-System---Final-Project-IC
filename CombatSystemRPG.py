@@ -826,21 +826,11 @@ def rest(character):
 
 
 
-#Function to decide what action each character does and check if character is poisoned
+#Function to decide what action each character does
 def chooseAction(character):
 
 
     choiceNotChosen = True
-
-    #If the character is poisoned and alive, he takes poison damage and reduces poison turns by 1
-    if (character["poisoned"] > 0 and character["health"] > 0):
-
-        character["poisoned"] = character["poisoned"] - 1
-        print(colored("\n-----------------------------\n", "green") + character["name"] + " is poisoned he takes " + colored(poisonDamage, "green", attrs=["bold"]) + " damage!")
-        character["health"] = character["health"] - poisonDamage
-        print("Health is now " + str(character["health"]) + colored("\nPoisoned", "green", attrs=["bold"]) + " turns left: " + str(character["poisoned"]) + colored("\n-------------------------------\n", "green"))
-        if(character["health"] <= 0):
-            character["alive"] = 0
 
     #If character is alive he acts
     while(choiceNotChosen and character["alive"] == 1):
@@ -905,7 +895,7 @@ def chooseAction(character):
     
 
 
-#Function for every action in the action phase
+#Function for every action in the action phase and check if the character is poisoned
 def actionPhase(characters):
 
     #Go through the character list which is ordered by iniative so each character can do through their action phase
@@ -922,8 +912,15 @@ def actionPhase(characters):
         #Display the turn order everytime someone's turn starts
         whoGoesFirst(characters)
 
-  
-        
+        #If the character is poisoned and alive, he takes poison damage and reduces poison turns by 1
+        if (character["poisoned"] > 0 and character["health"] > 0):
+
+            character["poisoned"] = character["poisoned"] - 1
+            print(colored("\n-----------------------------\n", "green") + character["name"] + " is poisoned he takes " + colored(poisonDamage, "green", attrs=["bold"]) + " damage!")
+            character["health"] = character["health"] - poisonDamage
+            print("Health is now " + str(character["health"]) + colored("\nPoisoned", "green", attrs=["bold"]) + " turns left: " + str(character["poisoned"]) + colored("\n-------------------------------\n", "green"))
+
+     
         #Check if the character is alive, and if he is he takes his turn
         if (character["alive"] == 1):
 
