@@ -31,6 +31,54 @@ def createCharacter(name, health, mana, armor, damage, initiative, loyalty, pois
     return (character)
 
 
+def printCharacterStats(character, choiceIndex):
+
+    #Initalized extra characters in case the character dies to keep everything aligned
+    extra = 0
+
+    #Print the index of the character - its name
+    print(str(choiceIndex) + " - " + character["name"], end = "")
+
+    #If the character is dead we add 8 extra characters to the value that gets 
+    #subtracted by the name length to keep everything aligned
+    if (character["alive"]  == 0):
+        extra = 8
+
+    #Print the required amount of spaces to keep the stats aligned
+    for _ in range(0, ((28 + extra) - len(character["name"]))):
+
+        print(" ", end="")
+    
+    #Print the health stat, in case the health is a single digit we add a 0 to the left of it to keep everything aligned
+    print("[ " + colored("HP: " , "green"), end="")
+    if (character["health"] < 10):
+        print("0", end="")
+    print(str(character["health"]) + "/" + str(character["maxHealth"]), end = " |")
+
+    #Print the mana stat, in case the mana is a single digit we add a 0 to the left of it to keep everything aligned
+    print(colored(" Mana: ", "blue"), end="")
+    if (character["mana"] < 10):
+        print("0", end="")
+    print(str(character["mana"]) + "/", end= "")
+
+    #Print the max mana stat, in case the max mana is a single digit we add a 0 to the left of it to keep everything aligned
+    if (character["maxMana"] < 10):
+        print("0", end="")
+    print(str(character["maxMana"]), end = " |")
+
+    #Print the armor, damage and turns left poisoned stats
+    print(colored(" Armor: ", "grey") + str(character["armor"]), end = " |")
+    print(colored(" Damage: ", "red") + str(character["damage"]), end = " |")
+    print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(character["poisoned"]), end = " |")
+
+    #If the character has damage boost on display damage boost with a red color, 
+    # in case he doesnt have damage boost on, its displayed gray
+    if (character["damageBoost"] > 0):
+        print(colored(" 2x Damage", "red", attrs= ["bold"] ) +  " ]")
+    else:
+        print(colored(" 2x Damage", "grey", attrs= ["bold"] ) +  " ]")
+
+
 #Function to roll iniative of each character
 def rollInitiative(character):
 
@@ -124,38 +172,7 @@ def printChoices(loyalty):
             
             choiceIndex += 1
 
-            extra = 0
-
-            print(str(choiceIndex) + " - " + x["name"], end = "")
-
-            if (x["alive"]  == 0):
-                extra = 8
-
-            for _ in range(0, ((28 + extra) - len(x["name"]))):
-
-                print(" ", end="")
-            
-            print("[ " + colored("HP: " , "green"), end="")
-            if (x["health"] < 10):
-                print("0", end="")
-            print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
-
-            print(colored(" Mana: ", "blue"), end="")
-            if (x["mana"] < 10):
-                print("0", end="")
-            print(str(x["mana"]) + "/", end= "")
-
-            if (x["maxMana"] < 10):
-                print("0", end="")
-            print(str(x["maxMana"]), end = " |")
-
-            print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
-            print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
-            print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
-            if (x["damageBoost"] > 0):
-                print(colored(" 2x Damage", "red", attrs= ["bold"] ) +  " ]")
-            else:
-                print(colored(" 2x Damage", "grey", attrs= ["bold"] ) +  " ]")
+            printCharacterStats(x, choiceIndex)
 
     print("\n 0 - Go Back")
 
@@ -642,39 +659,7 @@ def whoGoesFirst(characters):
             
             choiceIndex += 1
 
-            extra = 0
-
-            print(str(choiceIndex) + " - " + x["name"], end = "")
-
-            if (x["alive"]  == 0):
-                extra = 8
-
-            for _ in range(0, ((28 + extra) - len(x["name"]))):
-
-                print(" ", end="")
-            
-            print("[ " + colored("HP: " , "green"), end="")
-            if (x["health"] < 10):
-                print("0", end="")
-            print(str(x["health"]) + "/" + str(x["maxHealth"]), end = " |")
-
-            print(colored(" Mana: ", "blue"), end="")
-            if (x["mana"] < 10):
-                print("0", end="")
-            print(str(x["mana"]) + "/", end= "")
-
-            if (x["maxMana"] < 10):
-                print("0", end="")
-            print(str(x["maxMana"]), end = " |")
-
-            print(colored(" Armor: ", "grey") + str(x["armor"]), end = " |")
-            print(colored(" Damage: ", "red") + str(x["damage"]), end = " |")
-            print(colored(" Poisoned: ", "green" , attrs= ["bold"]) + str(x["poisoned"]), end = " |")
-            if (x["damageBoost"] > 0):
-                print(colored(" 2x Damage", "red", attrs= ["bold"] ) +  " ]")
-            else:
-                print(colored(" 2x Damage", "grey", attrs= ["bold"] ) +  " ]")
-
+            printCharacterStats(x, choiceIndex)
 
 
 #Function to know who is using each spell
@@ -776,7 +761,7 @@ def attackPhase(character):
 
         #If the enemy is a goblin he has 50% chance to deal double damage
         if (character["name"] == goblin["name"]):
-#tempo goblin shaman
+
             #Damage * d2
             d2 = random.randrange(2, 5)
             
@@ -882,19 +867,20 @@ def chooseAction(character):
                 choice = "1"
                 
 
-        #If character is attacking he goes into Attack Phase
+        #If character chooses to attack he goes into Attack Phase
         if (choice == "1"):
 
             if (attackPhase(character) != "0"):
                 choiceNotChosen = False
             
 
-        #If character is casting a spell he goes into Spell Phase
+        #If character choose to cast a spell he goes into Spell Phase
         elif (choice == "2"):
 
             if (spellPhase(character) != "0"):
                 choiceNotChosen = False
 
+        #If the character chooses to rest he goes to rest function
         elif (choice == "3"):
 
             rest(character)
