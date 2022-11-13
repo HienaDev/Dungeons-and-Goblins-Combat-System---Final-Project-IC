@@ -915,7 +915,7 @@ def chooseAction(character):
                     #If Goblin Shaman doesnt have enough mana to cast a spell he rests to recover mana
                     if (goblinShaman["mana"] < 6):
 
-                        rest()
+                        rest(goblinShaman)
 
                     #If Goblin Shaman has enough mana he will cast a random spell
                     else:
