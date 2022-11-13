@@ -193,7 +193,7 @@ def targetChoice(friendship):
             printChoices("evil")
 
             #Receives the player choice
-            attackDecision = input("\n").translate({ord(c): None for c in string.whitespace}).lower()
+            attackDecision = input("\n>").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
             
             #If he chooses 1  and the green goblin is alive he gets the green goblin as the target
@@ -242,7 +242,7 @@ def targetChoice(friendship):
             printChoices("good")
 
             #Gets the player's decision
-            attackDecision = input("\n" ).translate({ord(c): None for c in string.whitespace}).lower()
+            attackDecision = input("\n>" ).translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
 
             #If he chooses 1 and the rogue is alive he gets the rogue as the target
@@ -515,7 +515,7 @@ def spellChooseWarrior():
         +"\n 0 - Go Back\n")
         
         #Get the player's input
-        choice = input().translate({ord(c): None for c in string.whitespace}).lower()
+        choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
         #Go to function rushDown if he chooses 1
@@ -554,7 +554,7 @@ def spellChooseRogue():
         print("\n 0 - Go Back\n\n")
 
         #Get the player's input
-        choice = input().translate({ord(c): None for c in string.whitespace}).lower()
+        choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
         #Go to function arrowRain if he chooses 1
@@ -597,7 +597,7 @@ def spellChoosePriest():
         print("\n 0 - Go Back\n\n")
 
         #Get the player's input
-        choice = input().translate({ord(c): None for c in string.whitespace}).lower()
+        choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
         #Go to function exorcism if he chooses 1
@@ -852,7 +852,8 @@ def chooseAction(character):
         if (character["loyalty"] == "good"):
 
             print("\n\nYou are: " + character["name"])
-            choice = input("Would you like to: \n 1 - Attack \n 2 - Use a spell \n 3 - Rest ( Recover "+ colored("Mana", "blue") +" )\n\n").translate({ord(c): None for c in string.whitespace}).lower()
+            print("Would you like to: \n 1 - Attack \n 2 - Use a spell \n 3 - Rest ( Recover "+ colored("Mana", "blue") +" )\n")
+            choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
 
         #If its an enemy character (loyalty = evil) his actions are randomly chosen
@@ -958,7 +959,7 @@ def actionPhase(characters):
                     x["name"] = colored(x["name"], attrs= ["reverse"])
 
             chooseAction(character)
-            
+
             #Give time for the player to see what happened in that turn
             time.sleep(6)
 
@@ -1017,8 +1018,8 @@ rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 22, 10, 0, 6,
 priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 0, 0, 1)  
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 0, 0, 1)  
 goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 7, "evil", 0, 0, 1)   
-greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 1, 8, 7, "evil", 0, 0, 1)
-redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 12, 0, 1, 9, 7, "evil", 0, 0, 1)
+greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
+redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 12, 0, 0, 9, 7, "evil", 0, 0, 1)
 ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
 
 #Creating an unsorted list for the fuction printChoices to always display the same options since the list characters will constantly be sorted
@@ -1027,7 +1028,12 @@ charactersUnsorted = [rogue, priest, warrior, greenGoblin, ogre, goblinShaman, r
 #Creating a list with every character that will constantly be sorted by initiative order
 characters = [rogue, priest, warrior, goblinShaman, greenGoblin, ogre, redGoblin]
 
-
+print("             Welcome to Dungeons & Goblins!")
+time.sleep(2)
+print("       Here you will have to face a party of scary goblins!")
+time.sleep(2)
+print(" Enjoy your time!")
+time.sleep(3.5)
 #Main combat loop 
 while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + greenGoblin["health"] + goblinShaman["health"]  + redGoblin["health"]> 0 ):
 
