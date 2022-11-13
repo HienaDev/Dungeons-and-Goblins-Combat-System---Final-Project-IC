@@ -280,6 +280,9 @@ def damageBuff():
     #Roll a 7 sided dice
     d7 = random.randrange(1, 8)
 
+    #Reduce goblin shaman name by the spell's cost
+    goblinShaman["mana"] -= 8
+
     print(colored("\n-----------------------------", "red"))
 
     #If the goblin shaman rolls a 1 (14% chance) he fails to cast the spell
@@ -333,6 +336,9 @@ def arrowRain():
 def poison():
 
     target = 0
+
+    #Reduce goblin shaman name by the spell's cost
+    goblinShaman["mana"] -= 6
 
     #Cycle happens until goblin shaman picks an ally that's alive
     while(not target in (priest, warrior, rogue)):
@@ -504,7 +510,7 @@ def spellChooseWarrior():
         #Display possible options
         print("Choose a spell, you have " + colored(str(warrior["mana"]), "blue") + " mana: ")
         print(" 1 - RushDown (" + colored(str(warrior["damage"] + 1), "red") + "-" + colored(str(warrior["damage"] + 4), "red") + ") Cost: " + colored("5", "blue") 
-        +"\n\n0 - Go Back\n")
+        +"\n 0 - Go Back\n")
         
         #Get the player's input
         choice = input().translate({ord(c): None for c in string.whitespace}).lower()
@@ -998,8 +1004,8 @@ rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 22, 10, 0, 6,
 priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 0, 0, 1)  
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 0, 0, 1)  
 goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 12, "evil", 0, 0, 1)   
-greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
-redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
+greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 1, 8, 7, "evil", 0, 0, 1)
+redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 15, 0, 1, 8, 7, "evil", 0, 0, 1)
 ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
 
 #Creating an unsorted list for the fuction printChoices to always display the same options since the list characters will constantly be sorted
