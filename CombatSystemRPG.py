@@ -1009,7 +1009,7 @@ priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 0, 0, 1)  
 goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 12, "evil", 0, 0, 1)   
 greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 1, 8, 7, "evil", 0, 0, 1)
-redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 12, 0, 1, 10, 7, "evil", 0, 0, 1)
+redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 12, 0, 1, 9, 7, "evil", 0, 0, 1)
 ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
 
 #Creating an unsorted list for the fuction printChoices to always display the same options since the list characters will constantly be sorted
