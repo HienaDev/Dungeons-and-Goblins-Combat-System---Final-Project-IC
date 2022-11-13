@@ -1,45 +1,40 @@
-## Dungeons and Dragons - Introdução à computação.
+# **Dungeons and Dragons - Introdução à computação.**
 
-### Autoria: 
-##### Trabalho realizado por :
+## Authorship: 
+
+##### Work done by:
 
 - Henrique Monteiro - a22202855
 - António Rodrigo - a22202884
 
-#### Partes abordadas por cada elemento:
+##### Functions addressed by each element:
+\
+ **António**:
 
-O projeto teve início com ambos os membros do projeto a trabalhar na ideia e como iriamos começar a trabalhar no esqueleto do código.
-
-Temas abordados e código realizado por **António**:
-
-- Adicionou a função para criar personagens;
-- Adicionou a ordem dos turnos dos personagens;
-- Adicionou a função para mostrar a ordem de quem joga primeiro;
-- Adicionou o "Users Interface";
-- Adicionou a função para escolher a ação dos personagens;
-- Adicionou a arte de "YOUWIN" e "YOULOSE";
-- Adicionou novas personagens ( Goblin Shaman, Goblin, "Rougue")
-- Adicionou cores ao texto exposto;
-- Adicionou um timer entre as ações dos monstros inimigos;
-- Adicionou comentário;
-- Adicionou vários fixes a bugs;
-- Adicionou os status dos personagens no output;
+- Added createCharacter function;
+- Added sorting functions;
+- Added function to print turn order on screen;
+- Added the game's UI;
+- Added function to choose the action of each character;
+- Added "YOU WIN/YOU LOSE" text;
+- Added new characters ( Goblin Shaman, Goblin, Rogue);
+- Added colors to the printed text;
+- Added timer inbetween actions;
+- Added most of the commentary;
+- Added characters stats to output;
 
 
-Temas abordados e código realizado por **Henrique**:
+**Henrique**:
 
 
-- Adicionou a ação de "Spells";
-- Adicionou "Spells": ("Poison, Mend, Exorcism);
-- Adicionou quem são os targets dos "Spells";
-- Adicionou nova tentativa de spells para novas personagens( DamageBuff, Arrow Rain );
-- Adicionou um novo spell ( Poison );
-- Adicionou a opção de voltar atrás e melhorou os visuáis;
-- Adicionou comentário;
-- Adicionou opção de "rest" (descanso que aumenta mana);
-- Adicionou a "SpellFase" do Goblin Shaman;
-- Adicionou a versão final do "Spell" Poison;
-- Adicionou um pequeno hot fix;
+- Added function to choose spells;
+- Added spells: (Poison, Mend, Exorcism, DamageBuff, Rushdown, DamageBuff, Arrow Rain);
+- Added spell targetting;
+- Added the option to backtrack on menus and improved text clarity on the output;
+- Added comments;
+- Added the rest action;
+- Added goblin shaman spell phase;
+
 
 
 ### Organização e explicação do código:
