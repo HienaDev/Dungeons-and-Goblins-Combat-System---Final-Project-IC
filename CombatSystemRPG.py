@@ -30,6 +30,18 @@ def createCharacter(name, health, mana, armor, damage, initiative, loyalty, pois
 
     return (character)
 
+#Check if any character died, and if they did they get their stats changed to 0
+def checkIfDead(character):
+
+    if (character["health"] <= 0 and character["alive"] == 1):
+
+        print(colored("\n--------------------------", "red",  attrs=["bold"]))
+        print("     " + character["name"] + " is downed!")
+        print(colored("--------------------------\n", "red",  attrs=["bold"]))
+        character["alive"] = 0
+        character["health"] = 0
+        character["name"] = colored(character["name"], attrs= ["reverse"])
+
 #Function to print every character with its stats 
 def printCharacterStats(character, choiceIndex):
 
@@ -971,17 +983,13 @@ def actionPhase(characters):
 
             #Check if any character died inbetween character turns, to make sure a dead character cannot act, and changes his alive value to 0
             for x in characters:
-
-                if (x["health"] <= 0 and x["alive"] == 1):
-
-                    print(colored("\n--------------------------", "red",  attrs=["bold"]))
-                    print("     " + x["name"] + " is downed!")
-                    print(colored("--------------------------\n", "red",  attrs=["bold"]))
-                    x["alive"] = 0
-                    x["health"] = 0
-                    x["name"] = colored(x["name"], attrs= ["reverse"])
+                checkIfDead(x)
 
             chooseAction(character)
+
+            #Check if any character died inbetween character turns, to make sure a dead character cannot act, and changes his alive value to 0
+            for x in characters:
+                checkIfDead(x)
 
             #Give time for the player to see what happened in that turn
             time.sleep(6)
