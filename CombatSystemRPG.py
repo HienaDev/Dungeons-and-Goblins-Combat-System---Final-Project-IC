@@ -373,7 +373,7 @@ def rushDown():
         #Display the damage dealt by the warrior to the target
         print(colored("\n-----------------------------", "white"))
         target["health"] = target["health"] - (warrior["damage"] + d4)
-        print( target["name"] + " took " + colored(str((warrior["damage"] + d4)), "red", attrs = ["bold"]) + " damage!")
+        print(target["name"] + " took " + colored(str((warrior["damage"] + d4)), "red", attrs = ["bold"]) + " damage!")
         print(target["name"] + " now has " + colored(str(target["health"]), "green", attrs = ["bold"]) + " health!")
         print(colored("-----------------------------\n", "white"))
         
