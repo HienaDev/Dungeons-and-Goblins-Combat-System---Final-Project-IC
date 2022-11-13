@@ -1028,12 +1028,15 @@ charactersUnsorted = [rogue, priest, warrior, greenGoblin, ogre, goblinShaman, r
 #Creating a list with every character that will constantly be sorted by initiative order
 characters = [rogue, priest, warrior, goblinShaman, greenGoblin, ogre, redGoblin]
 
+
 print("             Welcome to Dungeons & Goblins!")
 time.sleep(2)
-print("       Here you will have to face a party of scary goblins!")
+print("\n       Here you will have to face a party of dangerous goblins...")
 time.sleep(2)
-print(" Enjoy your time!")
+print("\n Good luck! and watch out for the crits...")
 time.sleep(3.5)
+
+
 #Main combat loop 
 while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + greenGoblin["health"] + goblinShaman["health"]  + redGoblin["health"]> 0 ):
 
