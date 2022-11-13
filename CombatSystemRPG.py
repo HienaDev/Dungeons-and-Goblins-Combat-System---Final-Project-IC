@@ -186,7 +186,7 @@ def targetChoice(friendship):
         attackDecision = ""
 
         #Loop so the player can only choose one of the options displayed or else it keeps asking again
-        while(not attackDecision in (goblin, ogre, goblinShaman, "0")):
+        while(not attackDecision in (greenGoblin, ogre, goblinShaman, redGoblin, "0")):
 
             #Prints all the possible choices for enemies
             printChoices("evil")
@@ -195,10 +195,10 @@ def targetChoice(friendship):
             attackDecision = input("\n").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
             
-            #If he chooses 1  and the goblin is alive he gets the goblin as the target
-            if ((attackDecision == "1" and goblin["alive"] == 1) or (attackDecision == "goblin" and goblin["alive"] == 1)):
+            #If he chooses 1  and the green goblin is alive he gets the green goblin as the target
+            if ((attackDecision == "1" and greenGoblin["alive"] == 1) or (attackDecision == "greengoblin" and greenGoblin["alive"] == 1)):
 
-                attackDecision = goblin
+                attackDecision = greenGoblin
             
             #If he chooses 2 and the ogre is alive he gets the ogre as the target
             elif ((attackDecision == "2" and ogre["alive"] == 1) or (attackDecision == "ogre" and ogre["alive"] == 1)):
@@ -210,6 +210,11 @@ def targetChoice(friendship):
 
                 attackDecision = goblinShaman
             
+            #If he chooses 4 and the red goblin  is alive he gets the red goblin as the target
+            elif ((attackDecision == "4" and redGoblin["alive"] == 1) or (attackDecision == "redgoblin" and redGoblin["alive"] == 1)):
+
+                attackDecision = redGoblin
+
             #If he chooses 0 the function returns 0
             elif (attackDecision == "0"):
 
@@ -273,19 +278,19 @@ def targetChoice(friendship):
 def damageBuff():
     	
     #Roll a 7 sided dice
-    d7 = random.randrange(1,8)
+    d7 = random.randrange(1, 8)
 
     print(colored("\n-----------------------------", "red"))
 
     #If the goblin shaman rolls a 1 (14% chance) he fails to cast the spell
     if (d7 == 1):
 
-        print(goblinShaman["name"] + " tries to buff the" + colored(" enemies", "red") + " but fails!")
+        print(goblinShaman["name"] + " tries to buff the" + colored(" Enemies", "red") + " but fails!")
 
     #If he rolls anything other than the 1 (86% chance) he casts damage buff
     else:
         
-        print(goblinShaman["name"] + " buffs the" + colored(" enemies ", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )\n")
+        print(goblinShaman["name"] + " buffs the" + colored(" Enemies ", "red") + "damage! ( " + colored("x2", "red") +" damage for the next turn )")
         for x in characters:
             if (x["loyalty"] == "evil"):
                 x["damageBoost"] += 1
@@ -299,8 +304,8 @@ def damageBuff():
 #Use the rogue's spell arrow rain
 def arrowRain():
 
-    #Roll a 10 sided dice
-    d5 = random.randrange(1,6)
+    #Roll a 8 sided dice
+    d5 = random.randrange(1, 9)
 
     #Arrow Rains's mana cost
     spellMpCost = 8
@@ -536,7 +541,7 @@ def spellChooseRogue():
 
         #Display possible options
         print("Choose a spell, you have " + colored(str(rogue["mana"]), "blue") + " mana: ")
-        print(" 1 - Arrow Rain (AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 5), "red") + ") Cost: " + colored("8", "blue"))
+        print(" 1 - Arrow Rain (AOE " + colored(str(int((rogue["damage"] / 2)) + 1), "red") + "-" + colored(str(int((rogue["damage"] / 2)) + 8), "red") + ") Cost: " + colored("8", "blue"))
         print("\n 0 - Go Back\n\n")
 
         #Get the player's input
@@ -639,11 +644,6 @@ def spellChooseGS():
 
         rest()
     
-
-            
-
-
-
 
 #Function that shows character's attack order on the terminal
 def whoGoesFirst(characters):
@@ -759,11 +759,18 @@ def attackPhase(character):
         #If its any other enemy than damage * 1
         d2 = 2
 
-        #If the enemy is a goblin he has 50% chance to deal double damage
-        if (character["name"] == goblin["name"]):
+        #If the enemy is a goblin he has 25% chance to deal 2x damage, 25% chance do deal 1.5x damage,
+        #  25% chance to deal normal damage and 25% chance of dealing 0.5x damage
+        if (character["name"] == greenGoblin["name"] or character["name"] == redGoblin["name"] ):
 
             #Damage * d2
-            d2 = random.randrange(2, 5)
+            d2 = random.randrange(1, 5)
+            if (d2 == 1):
+                print(character["name"] + " fails his attack and deals half " + colored("damage", "red") + "!")
+            elif (d2 == 3):
+                print(character["name"] + " hits a vital! 1.5x " + colored("Damage", "red") + "!")
+            elif (d2 == 4):
+                print(character["name"] + " gets a "+ colored("CRITICAL HIT 2x ", "yellow", attrs=["bold"]) + colored("Damage", "red") + "!")
             
         #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
@@ -841,14 +848,15 @@ def chooseAction(character):
             #If the enemy is a goblinShaman he has a chance of using spells, since he's the only spell caster on the enemy side
             if (character["name"] == goblinShaman["name"]):
                 
-                d4 = random.randrange(1, 8)
+                #Roll a 10 sided dice
+                d4 = random.randrange(1, 11)
                 
-                #15% chance of the Goblin Shaman attacking 
+                #10% chance of the Goblin Shaman attacking 
                 if (d4 == 1):
 
                     choice = "1"
 
-                #85% chance of the Goblin Shaman casting a spell
+                #90% chance of the Goblin Shaman casting a spell
                 else:
 
                     #If Goblin Shaman doesnt have enough mana to cast a spell he rests to recover mana
@@ -896,7 +904,7 @@ def actionPhase(characters):
     for character in characters:
 
         #In case one of the parties dies mid combat loop, this breaks the loop and exits to whoWon to display 
-        if (ogre["health"] + goblin["health"] + goblinShaman["health"] <= 0):
+        if (ogre["health"] + greenGoblin["health"] + goblinShaman["health"] + redGoblin["health"] <= 0):
 
             break
         elif (warrior["health"] + priest["health"] + rogue["health"] <= 0):
@@ -953,7 +961,7 @@ def whoWon():
         print("\n")
 
     #Prints YOU WIN if enemy party has 0 combined health                                                         
-    elif (ogre["health"] + goblin["health"] + goblinShaman["health"] <= 0 ):
+    elif (ogre["health"] + greenGoblin["health"] + goblinShaman["health"] + redGoblin["health"]<= 0 ):
 
         print(colored ("__     __ ____   _    _  __          __ _____  _   _ ", "yellow"))
         print(colored ("\ \   / // __ \ | |  | | \ \        / /|_   _|| \ | |", "yellow"))
@@ -990,18 +998,19 @@ rogue = createCharacter(colored("Rogue", "white", attrs=["bold"]), 22, 10, 0, 6,
 priest = createCharacter(colored("Priest", "white", attrs=["bold"]), 20, 25, 0, 2, 6, "good", 0, 0, 1)  
 warrior = createCharacter(colored("Warrior", "white", attrs=["bold"]), 32, 5, 2, 5, 2, "good", 0, 0, 1)  
 goblinShaman = createCharacter(colored("Goblin Shaman", "red", attrs=["bold"]), 20, 22, 0, 2, 12, "evil", 0, 0, 1)   
-goblin = createCharacter(colored("Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
-ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 20, 0, 2, 5, 0, "evil", 0, 0, 1)
+greenGoblin = createCharacter(colored("Green Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
+redGoblin = createCharacter(colored("Red Goblin", "red", attrs=["bold"]), 15, 0, 0, 8, 7, "evil", 0, 0, 1)
+ogre = createCharacter(colored("Ogre", "red", attrs=["bold"]), 25, 0, 2, 5, 0, "evil", 0, 0, 1)
 
 #Creating an unsorted list for the fuction printChoices to always display the same options since the list characters will constantly be sorted
-charactersUnsorted = [rogue, priest, warrior, goblin, ogre, goblinShaman]
+charactersUnsorted = [rogue, priest, warrior, greenGoblin, ogre, goblinShaman, redGoblin]
 
 #Creating a list with every character that will constantly be sorted by initiative order
-characters = [rogue, priest, warrior, goblinShaman, goblin, ogre]
+characters = [rogue, priest, warrior, goblinShaman, greenGoblin, ogre, redGoblin]
 
 
 #Main combat loop 
-while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + goblin["health"] + goblinShaman["health"] > 0 ):
+while(warrior["health"] + priest["health"] + rogue["health"]  > 0 and ogre["health"] + greenGoblin["health"] + goblinShaman["health"]  + redGoblin["health"]> 0 ):
 
     clear()
     #Create a list with each character rolling its iniative
