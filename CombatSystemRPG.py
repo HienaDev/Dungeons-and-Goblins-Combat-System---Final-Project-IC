@@ -196,7 +196,7 @@ def targetChoice(friendship):
             printChoices("evil")
 
             #Receives the player choice
-            attackDecision = input("\n>").translate({ord(c): None for c in string.whitespace}).lower()
+            attackDecision = input("\n> ").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
             
             #If he chooses 1  and the green goblin is alive he gets the green goblin as the target
@@ -245,7 +245,7 @@ def targetChoice(friendship):
             printChoices("good")
 
             #Gets the player's decision
-            attackDecision = input("\n>" ).translate({ord(c): None for c in string.whitespace}).lower()
+            attackDecision = input("\n> " ).translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
 
             #If he chooses 1 and the rogue is alive he gets the rogue as the target
@@ -518,7 +518,7 @@ def spellChooseWarrior():
         +"\n 0 - Go Back\n")
         
         #Get the player's input
-        choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
+        choice = input("> ").translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
         #Go to function rushDown if he chooses 1
@@ -557,7 +557,7 @@ def spellChooseRogue():
         print("\n 0 - Go Back\n\n")
 
         #Get the player's input
-        choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
+        choice = input("> ").translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
         #Go to function arrowRain if he chooses 1
@@ -600,7 +600,7 @@ def spellChoosePriest():
         print("\n 0 - Go Back\n\n")
 
         #Get the player's input
-        choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
+        choice = input("> ").translate({ord(c): None for c in string.whitespace}).lower()
         deleteInput()
 
         #Go to function exorcism if he chooses 1
@@ -856,7 +856,7 @@ def chooseAction(character):
 
             print("\n\nYou are: " + character["name"])
             print("Would you like to: \n 1 - Attack \n 2 - Use a spell \n 3 - Rest ( Recover "+ colored("Mana", "blue") +" )\n")
-            choice = input(">").translate({ord(c): None for c in string.whitespace}).lower()
+            choice = input("> ").translate({ord(c): None for c in string.whitespace}).lower()
             deleteInput()
 
         #If its an enemy character (loyalty = evil) his actions are randomly chosen
