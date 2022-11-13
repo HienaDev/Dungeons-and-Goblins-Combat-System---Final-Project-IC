@@ -778,7 +778,7 @@ def attackPhase(character):
         #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
             
-            damage = int(((character["damage"] * d2 /2) - target["armor"]))
+            damage = int(((character["damage"] * (d2/2) - target["armor"])))
         else:
 
             character["damageBoost"] = 0
