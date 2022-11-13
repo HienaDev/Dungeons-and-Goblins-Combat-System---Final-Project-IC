@@ -21,8 +21,8 @@
 - Added function to print turn order on screen;
 - Added the game's UI;
 - Added function to choose the action of each character;
-- Added "YOU WIN/YOU LOSE" text;
-- Added new characters ( Goblin Shaman, Goblin, Rogue);
+- Added whoWon function;
+- Added new characters (Goblin Shaman, Goblin, Rogue);
 - Added colors to the printed text;
 - Added timer inbetween actions;
 - Added most of the commentary;
@@ -40,6 +40,8 @@
 - Added comments;
 - Added the rest action;
 - Added goblin shaman spell phase;
+- Added option to go back;
+- Added and translanted the REAEDME file.
 
 
 
