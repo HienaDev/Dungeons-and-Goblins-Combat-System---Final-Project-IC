@@ -59,5 +59,29 @@ As personagens do jogador são um "Priest", um "Warrior" e um "Rouge".
 
 ![](foto.png)
 
-eveverv
+
+
+
+##### Referencias:
+
+Durante tempos livres e de pesquisa, ideias foram trocadas com vários colegas, tal como ajuda fornecida pleos mesmos.
+
+Alguns dos colegas:
+
+- Ricardo Almeida - a21807601
+- Paulo Silva
+- Mariana Marques - 
+- João Silva -
+
+
+
+#### Links:
+
+
+- https://stackoverflow.com/questions/10829650/delete-the-last-input-row-in-python
+
+- https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console
+
+- https://www.w3schools.com/python/python_dictionaries.asp
+
 
