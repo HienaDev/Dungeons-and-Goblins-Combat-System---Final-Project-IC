@@ -247,7 +247,7 @@ def damageBuff():
     d7 = random.randrange(1,7)
 
     print(colored("\n-----------------------------", "red"))
-    
+
     #If the goblin shaman rolls a 1 (14% chance) he fails to cast the spell
     if (d7 == 1):
 
@@ -580,7 +580,7 @@ def spellChoosePriest():
 def spellChooseGS():
     
     #If he gets a 1 or 2 (66% chance) he chooses poison, if he gets a 3  (33% chance) he choose the damage buff spell
-    d3 = random.randrange(1,3)
+    d3 = random.randrange(1, 3)
 
     #If he has enough mana he casts the spell, else he rests
     if (goblinShaman["mana"] > 5):
@@ -758,10 +758,11 @@ def attackPhase(character):
         #Doubles the character's damage if he has damage boost
         if (character["damageBoost"] == 0):
             
-            damage = ((character["damage"] * int(d2 /2)) - target["armor"])
+            damage = ((character["damage"] * (d2 /2)) - target["armor"])
         else:
-
-            damage = ((character["damage"] * 2 * int(d2 /2)) - target["armor"])
+            
+            character["damageBoost"] = 0
+            damage = ((character["damage"] * 2 * (d2 /2)) - target["armor"])
 
         #If the armor didnt nullify the damage deal damage, else deal no damage and display "target took no damage"
         if (damage > 0):
