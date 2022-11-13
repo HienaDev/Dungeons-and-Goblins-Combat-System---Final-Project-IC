@@ -835,6 +835,8 @@ def rest(character):
 #Function to decide what action each character does
 def chooseAction(character):
 
+    #Display the turn order everytime someone has to choose an action
+    whoGoesFirst(characters)
 
     choiceNotChosen = True
 
@@ -903,7 +905,6 @@ def chooseAction(character):
         else:
             
             clear()
-            whoGoesFirst()
 
     
 
@@ -922,8 +923,6 @@ def actionPhase(characters):
 
             break
 
-        #Display the turn order everytime someone's turn starts
-        whoGoesFirst(characters)
 
         #If the character is poisoned and alive, he takes poison damage and reduces poison turns by 1
         if (character["poisoned"] > 0 and character["health"] > 0):
